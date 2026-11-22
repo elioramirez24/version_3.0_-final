@@ -1,4 +1,8 @@
-# Archivos Fusion 360
+# Archivos Fusion 360 (modelo v1)
+
+> **Nota v3.0:** este modelo corresponde a la **iteración 1** (estructura en acero de 450 × 450 × 1000 mm). El prototipo definitivo se construyó en madera con otras medidas (380 × 370 × 850 mm); su diseño está en `diseno_3d/planos/planos_v3.pdf`. Se conserva como registro del proceso iterativo.
+>
+> El archivo está en `diseno_3d/compactador_v1.f3z`.
 
 ## Archivos
 

@@ -1,76 +1,67 @@
-# Diseño 3D - Documentación
+# Diseño 3D y Planos - Documentación
 
-## ⚠️ REQUISITO CRÍTICO
+## Contenido
 
-El modelo 3D debe incluir **TODOS** los componentes del prototipo:
-- ✅ Encapsulado exterior completo
-- ✅ Placa ESP32/Arduino (con dimensiones exactas)
-- ✅ Todos los sensores en posición de instalación
-- ✅ Todos los actuadores
-- ✅ Batería / fuente de alimentación
-- ✅ Cableado (routing aproximado)
-- ✅ Sistema de montaje (brackets, tornillos)
-- ✅ Orificios de ventilación (si aplica)
-
-**NO ES ACEPTABLE:** Solo el encapsulado vacío sin componentes internos
+| Carpeta / archivo | Contenido | Versión |
+|---|---|---|
+| `planos/` | **Planos del prototipo final** (PDF de 3 hojas + imágenes): ensamble, despiece, isométrica y lista de piezas | v3 |
+| `compactador_v1.f3z` | Modelo de Fusion 360 de la v1 (estructura en acero, 450 × 450 × 1000 mm) | v1 |
+| `fusion360/README.md` | Propiedades físicas por pieza del modelo v1 y observaciones de revisión | v1 |
 
 ---
 
-## Carpetas
+## Diseño definitivo (v3)
 
-#### `fusion360/`
-Archivos nativos de Fusion 360 (.f3d)
+![Vista isométrica](planos/planos_v3_hoja3_isometrica_bom.png)
 
-#### `renders/`
-Imágenes renderizadas de alta calidad
+**Unidades:** milímetros (mm) · **Escala de los planos:** 1:5 (detalles 1:3 y 1:2,5)
 
-#### `planos/`
-Planos técnicos con cotas
+| Parámetro | Valor |
+|---|---|
+| Dimensiones externas | 380 × 370 × 850 mm |
+| Construcción | Mueble de madera pintada de negro en 2 módulos atornillados (470 + 380 mm) |
+| Frente | Puertas de acrílico con marco negro y pestillo magnético; puerta de carga de acrílico 3 mm (200 × 150 mm) |
+| Mecanismo | Actuador lineal colgado de una viga (perno Ø8) que empuja una placa de madera de 300 × 300 × 50 mm por 2 tubos guía de Ø32 |
+| Carrera útil | 300 mm (alto de la cámara: la lata cabe parada) |
+| Mandos | Pulsadores Ø30 en la tapa: rojo = paro de emergencia, verde = compactar |
+| Refuerzos | Rieles laterales, 2 listones de fondo y **escuadras de acero en el techo y el piso** |
+
+### Componentes incluidos en los planos
+- ✅ Mueble exterior completo, puertas y puerta de carga
+- ✅ Actuador lineal en su posición, con su viga y perno de montaje
+- ✅ Placa compactadora, tubos guía, placa guía y repisa intermedia
+- ✅ Pulsadores y paso de cables en la tapa
+- ✅ Posición extendida de la placa (línea roja discontinua)
+- ⚠️ La electrónica (Arduino, relés, sensor, fuente) está sobre la repisa intermedia, pero no está dibujada en los planos: ver fotos en `hardware/fotos/` y el circuito en `hardware/esquemas/`
+- ⚠️ Las escuadras de acero se agregaron después de las pruebas y no están dibujadas
 
 ---
 
-## Especificaciones
+## Evolución del diseño
 
-**Software:** Autodesk Fusion 360  
-**Unidades:** Milímetros (mm)  
-**Escala:** 1:1 (dimensiones reales)
+| Aspecto | v1 (Fusion 360) | v3 (prototipo construido) |
+|---|---|---|
+| Material | Acero en todas las piezas (modelo) | Madera, acrílico, tubos guía y escuadras de acero |
+| Dimensiones | 450 × 450 × 1000 mm | 380 × 370 × 850 mm |
+| Peso | 135,4 kg (modelo en acero) | Mucho menor; [completar con medición] |
+| Placa compactadora | Acero macizo 380 × 380 × 15 mm | Madera 300 × 300 × 50 mm |
+| Guías | 2 ejes Ø16 | 2 tubos Ø32 |
+| Mandos | No modelados | Pulsadores Ø30 en la tapa |
+| Reparación | — | Puertas abatibles, actuador con un solo perno, módulos separables |
 
-**Dimensiones externas:** 450 mm × 450 mm × 1000 mm (envolvente del chasis base)  
-**Volumen de material:** 17.246 cm³ (suma de las 17 piezas)  
-**Peso estimado (modelo v1):** 135,4 kg con todas las piezas en acero (densidad 7,85 g/cm³)  
-**Material:** Acero en el modelo actual. Materiales reales de construcción: MDF (Trupán), listones de madera y lámina de metal para la placa compactadora (ver `hardware/bom/README.md`). ℹ️ Con MDF y madera, la estructura sin placa ni actuador pesaría cerca de 9,8 kg.
-
-El detalle por pieza está en `fusion360/README.md`.
+**Consecuencia del cambio de material:** la madera hizo el prototipo fabricable y liviano, pero limitó la fuerza útil a ≈ 700 N (3 A) frente a los 1500 N del actuador. Detalle en `testing/reportes/pruebas_carga_v3.md`.
 
 ---
 
-## Consideraciones de Diseño
+## Consideraciones de diseño
 
 ### Funcionales
-- [ ] Acceso a puertos USB/alimentación
-- [ ] Ventilación adecuada
-- [ ] Protección de componentes
-- [ ] Fácil acceso para mantenimiento
-- [ ] Resistencia a condiciones ambientales
+- [x] Acceso al USB y a la alimentación (electrónica en la repisa, detrás de la puerta frontal superior)
+- [x] Protección de la electrónica (separada de la cámara de compactación por la repisa intermedia)
+- [x] Fácil acceso para mantenimiento (puertas frontales abatibles)
+- [ ] Ventilación de la fuente de 12 V (revisar si la repisa queda cerrada)
+- [ ] Resistencia de la estructura a la fuerza completa del actuador (limitada a ≈ 700 N)
 
 ### Fabricación
-- [ ] Imprimible sin soportes excesivos
-- [ ] Tolerancias de ensamble (+0.2mm)
-- [ ] Grosor de pared mínimo 2mm
-- [ ] Sin ángulos imposibles (overhangs <45°)
-
----
-
-## Configuración de Impresión 3D (si fue utilizada)
-
-**Impresora:** [Modelo]  
-**Material:** [PLA/ABS/PETG]  
-**Calidad de capa:** 0.2mm  
-**Relleno:** 20-30%  
-**Soportes:** [Sí/No - dónde]  
-**Temperatura nozzle:** [°C]  
-**Temperatura cama:** [°C]  
-**Velocidad:** [mm/s]
-
-**Tiempo estimado de impresión:** [X horas]  
-**Peso de material:** [X gramos]
+- Cortes de madera con tolerancia de ±2 mm; agujeros +1/0 mm.
+- Holgura radial de 1 mm entre la placa (agujeros Ø34) y los tubos guía (Ø32).
