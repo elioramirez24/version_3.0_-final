@@ -1,74 +1,97 @@
-# Hardware - Documentación
+# Hardware - Documentación (v3.0)
 
 ## Contenido
-Esta carpeta contiene toda la documentación técnica del hardware del proyecto.
 
-### 📁 Carpetas
+| Carpeta / archivo | Contenido |
+|---|---|
+| `esquemas/` | Circuito real del prototipo (imagen numerada), simulación en Wokwi y tabla de conexiones |
+| `bom/` | Lista de materiales: electrónica, estructura de madera y refuerzos |
+| `fotos/` | Fotografías del prototipo final |
+| `instrucciones_ensamble.md` | Armado del circuito y del mueble, pruebas en seco y con 12 V |
 
-#### `esquemas/`
-Diagramas de circuitos y tabla de conexiones del sistema
-
-#### `bom/`
-Bill of Materials (Lista de materiales)
-
-#### `fotos/`
-Fotografías del prototipo (las de la v1.0 están en `iteraciones/iteracion_1/v1_fotos/`)
+Las instrucciones y conexiones de la v1 están en `iteraciones/iteracion_1/`.
 
 ---
 
-## Instrucciones de Ensamble
+## Componentes principales
 
-### Componentes Principales
-1. **Arduino UNO** - Lee los botones y decide qué relé activar.
-2. **2 módulos de relé de 5 V (JQC3F-05VDC-C)** - Interruptores que conectan los 12 V al actuador; juntos forman un puente H que permite invertir el sentido de giro del motor.
-3. **Actuador lineal 12 V DC, 300 mm, 1500 N** - Empuja la placa compresora.
-4. **Fuente de poder 12 V DC** - Alimenta el actuador. (El transformador original de 2 A venía defectuoso y fue reemplazado.)
-5. **2 pulsadores de 4 patitas** - Botón SALIR (compactar) y botón ENTRAR (volver).
-6. **Protoboard y cables macho-macho y macho-hembra** - Conexiones del lado de control.
+![Circuito real del prototipo v3](esquemas/circuito_real_v3.png)
 
-### Pasos de Ensamblaje
-Instrucciones completas y verificadas: `instrucciones_ensamble.md`. Resumen:
+| N° | Componente | Función |
+|---|---|---|
+| 1 | **Arduino UNO** | Lee los pulsadores y el sensor; decide cuándo bajar, parar y subir la placa |
+| 2 | **Pulsador verde Ø30** (tapa) | COMPACTAR: inicia el ciclo automático |
+| 3 | **Pulsador rojo Ø30** (tapa) | PARO DE EMERGENCIA: apaga ambos relés al instante |
+| 4 | **Sensor de corriente tipo ACS712** | Mide la corriente del actuador; a 3 A (≈ 700 N) se detiene la compactación |
+| 5 | **Módulo relé 1** (Songle SRD-05VDC-SL-C) | AVANCE: la placa baja |
+| 6 | **Módulo relé 2** (Songle SRD-05VDC-SL-C) | RETORNO: la placa sube. Junto con el relé 1 forma un puente H que invierte el sentido del motor |
+| 7 | **Fuente 12 V DC, 200 W (16,7 A)** | Potencia del actuador, separada del control |
+| 8 | **Actuador lineal 12 V** (ARF03-12-A1-405-300-C11) | Empuja la placa compactadora: 1500 N máx., carrera 300 mm, 6 mm/s |
+| 9 | **Protoboard** | Reparte 5 V y GND a pulsadores, relés y sensor |
+| 10 | **Cargador USB 5 V** | Alimenta el Arduino sin computador |
 
-1. Ubicar los botones cruzando la canaleta central de la protoboard (filas 10-12 y 20-22).
-2. Conectar el GND del Arduino a la columna azul (−) y el 5V a la columna roja (+).
-3. Cablear cada botón en diagonal: tierra en la columna a y señal en la columna j de la fila opuesta.
-4. Alimentar los relés (VCC a la columna roja, GND a la azul) y conectar sus IN a los pines 4 y 5.
-5. Conectar los 12 V a los relés según la tabla de `esquemas/README.md`.
-6. Subir `software/src/main/main.ino`.
-7. **Prueba en seco** con la fuente desenchufada: cada botón debe producir el "clic" de su relé y encender su luz verde.
-8. Enchufar la fuente y probar el movimiento del actuador.
+### Estructura (ver `diseno_3d/planos/`)
 
-### Precauciones
-- ⚠️ Desconectar el USB y el transformador antes de mover cualquier cable.
-- ⚠️ Ningún cable pelado de 12 V debe tocar la protoboard, el Arduino ni sus cables.
-- ⚠️ Recortar los hilos de cobre sueltos en las borneras para evitar cortocircuitos entre tornillos vecinos.
-- ⚠️ Mantener las manos lejos del vástago: el actuador avanza hasta 300 mm con 1500 N.
+- **Mueble de madera pintada de negro** en dos módulos atornillados (470 + 380 mm), 380 × 370 × 850 mm, con puertas frontales de acrílico y una puerta de carga de 200 × 150 mm.
+- **Placa compactadora de madera** (300 × 300 × 50 mm) guiada por **2 tubos de Ø32 mm**.
+- **Actuador colgado de una viga** en el techo, con un perno pivote de Ø8 mm.
+- **Escuadras de acero** en el techo y en el piso, agregadas porque la madera cedía con la fuerza del actuador.
+
+---
+
+## ⚠️ Limitación del prototipo: estructura de madera
+
+El material de la estructura limitó el proyecto. Sobre **3 A** de corriente, la fuerza del actuador (**≈ 700 N**) superaba lo que soportaba el mueble de madera y este tendía a romperse. Por eso:
+
+- El programa **corta a 3 A** (`CORRIENTE_LIMITE_A` en `compactador_v3.ino`).
+- Se compactan **como máximo 5 latas, siempre paradas**. Con más latas la corriente superaba los 3 A.
+- **No se pueden usar latas acostadas:** acostadas se vuelven más duras de aplastar y superan la resistencia del prototipo.
+- Se reforzaron **el techo y el piso con escuadras de acero**.
+
+El actuador (1500 N) y la fuente (16,7 A) tienen capacidad de sobra: el límite es la estructura. El detalle y el cálculo de la fuerza están en `testing/reportes/pruebas_carga_v3.md`.
+
+---
+
+## Especificaciones técnicas
+
+| Parámetro | Valor |
+|---|---|
+| Alimentación de control | 5 V por USB (cargador) |
+| Alimentación de potencia | 12 V DC, fuente LED de 200 W (16,7 A máx.), entrada 220 V AC |
+| Actuador | 12 V DC, carrera 300 mm, 1500 N máx., 6 mm/s, ciclo de trabajo 10 %, fines de carrera internos |
+| Corriente de trabajo | ≈ 1 A en vacío; **3 A máximo** permitido por el programa |
+| Fuerza de compactación | ≈ 700 N máximo (estimada; ver pruebas de carga) |
+| Capacidad por ciclo | Máximo 5 latas paradas |
+| Duración de un ciclo | ≈ 1 a 1,7 min (bajar y subir 300 mm a 6 mm/s) |
+| Dimensiones del mueble | 380 × 370 × 850 mm |
+| Material | Madera pintada, acrílico de 3 mm, tubos guía Ø32, escuadras de acero |
+
+---
+
+## Precauciones
+
+- ⚠️ Desconectar la fuente de 12 V y el USB antes de mover cualquier cable.
+- ⚠️ Ningún cable de 12 V debe tocar la protoboard, el Arduino ni sus cables.
+- ⚠️ La fuente se conecta a **220 V**: mantener cerrada su bornera (tapa transparente) y no tocar los bornes L y N con la fuente enchufada.
+- ⚠️ Mantener las manos fuera de la cámara mientras la placa se mueve. El pulsador rojo detiene todo.
+- ⚠️ No cargar más de 5 latas ni latas acostadas.
 - ⚠️ Respetar el ciclo de trabajo del actuador (10 %): unos 9 minutos de descanso por cada minuto de uso.
+- ⚠️ Recortar los hilos de cobre sueltos en las borneras para evitar cortocircuitos entre tornillos vecinos.
 
 ---
 
-## Especificaciones Técnicas
+## Solución de problemas
 
-**Alimentación control:** 5 V por USB (computador, cargador o power bank)  
-**Alimentación potencia:** 12 V DC (fuente de poder; amperaje: [completar])  
-**Actuador:** 12 V DC, carrera 300 mm, carga máx. 1500 N, velocidad 6 mm/s, ciclo de trabajo 10 %  
-**Consumo:** [medir] — ℹ️ cerca de 1 A sin carga; bajo carga cercana a 1500 N puede requerir 3 a 5 A  
-**Dimensiones del basurero (modelo v1):** 45 × 45 × 100 cm  
-**Peso (modelo v1, todo en acero):** 135,4 kg — ver `diseno_3d/fusion360/README.md`
-
----
-
-## Troubleshooting
-
-| Problema | Posible Causa | Solución |
-|----------|---------------|----------|
-| Los relés no hacen nada al presionar | El código usaba los pines de los botones como salidas y nunca leía los botones | Usar `main.ino` (pines y `INPUT_PULLUP` correctos) |
-| Un relé se activa solo, sin presionar | Señal y tierra del botón en la misma fila (patitas unidas internamente) | Tomar la señal en diagonal: j12 y j22 |
-| Luz verde encendida en reposo y se apaga al presionar | Módulos de relé con lógica inversa (activos con LOW) | `RELE_ENCENDIDO = LOW`, `RELE_APAGADO = HIGH` |
-| Luz roja del relé apagada | Sin 5 V: cable VCC/GND defectuoso o en el pin equivocado | Reemplazar los cables y verificar 5V → columna roja |
-| Un botón funciona a ratos | Pin 2 dañado por cortocircuito con el primer código | Usar el pin 6 |
-| Fallan ambos botones a la vez | Cable GND del Arduino a la columna azul suelto o dañado | Reemplazar ese cable |
-| Relés hacen "clic" pero el actuador no se mueve | Puentes cruzados entre relés (positivo arriba en uno y abajo en el otro) | Misma posición = mismo polo en ambos relés |
-| El actuador no se mueve con un botón | Ya está en su extremo de recorrido | Presionar el botón contrario |
-| Los relés funcionan pero el actuador no se mueve en ningún sentido | Transformador defectuoso: no entrega energía | Medir la salida con multímetro; reemplazar la fuente |
+| Problema | Posible causa | Solución |
+|---|---|---|
+| Los relés no responden a los pulsadores | Pines del código distintos del cableado | Revisar la tabla de pines de `software/src/README.md` |
+| Un relé se activa solo, sin presionar | Señal y tierra del pulsador en el mismo borne o cable pelado tocando GND | Revisar el cableado del pulsador con `diagnostico.ino` |
+| Luz verde del relé encendida en reposo | Módulo configurado en lógica inversa distinta | Revisar el jumper H/L del módulo y las constantes `RELE_ENCENDIDO` / `RELE_APAGADO` |
+| Luz roja del relé o del sensor apagada | Sin 5 V: cable VCC/GND defectuoso | Reemplazar los cables y verificar 5V → riel rojo |
+| Relés hacen "clic" pero el actuador no se mueve | Fuente desenchufada, cable suelto en COM o fuente sin salida | Medir 12 V en la bornera de la fuente y entre los COM (ver instrucciones, paso D3) |
+| El actuador se mueve solo al enchufar la fuente | Puentes cruzados (positivo en NO en un relé y en NC en el otro) | Desenchufar; misma posición = mismo polo en ambos relés |
+| El actuador no se mueve en un sentido | Ya está en su extremo de recorrido | Es normal: el fin de carrera interno lo detiene |
+| La placa se detiene apenas parte | Lectura del sensor mal calibrada | Ver `software/docs/README.md` |
+| La placa nunca se detiene por límite | El sensor no está en serie con la línea de 12 V | Revisar que V− pase por los bornes IP+ / IP− del sensor |
+| La madera cruje o se deforma | Demasiadas latas, latas acostadas o límite de corriente aumentado | Máximo 5 latas paradas; no subir `CORRIENTE_LIMITE_A`; revisar escuadras |
 | El multímetro marca 12 V solo por un instante | Las puntas apenas rozan el cobre | Medir apoyando la punta en la cabeza del tornillo |

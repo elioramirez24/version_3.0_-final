@@ -1,57 +1,88 @@
-# Esquemas de Circuito
+# Esquemas de Circuito (v3.0)
 
-## Archivos Requeridos
+## Archivos
 
-### Formato Fritzing
-- `circuito_completo.fzz` - Archivo fuente Fritzing — **pendiente**
-- `esquema_circuito.png` - Exportación del esquema — **pendiente**
+| Archivo | Contenido |
+|---|---|
+| `circuito_real_v3.png` | **Circuito real del prototipo final**, con el actuador lineal, la fuente de 12 V y el sensor de corriente. Cada componente está numerado y explicado |
+| `simulacion_wokwi_v3.png` | Simulación del control en Wokwi: el potenciómetro reemplaza al sensor de corriente y los LED verde y azul reemplazan al actuador |
+| `fuente/` | Scripts que dibujan `circuito_real_v3.png` (para editar el diagrama si cambia el cableado): `python3 generar_circuito_real_v3.py` crea el HTML y `python3 render_png.py` lo convierte a PNG con Chrome |
 
-### Formato Wokwi
-- `wokwi_diagram.json` - Archivo de proyecto Wokwi — **pendiente**
-- `wokwi_screenshot.png` - Captura del circuito — **pendiente**
-- `wokwi_link.txt` - URL del proyecto online — **pendiente**
-
-Mientras no esté el diagrama, la tabla siguiente documenta el circuito v1.0 tal como quedó funcionando.
+**Pendiente:** exportar desde Wokwi el `diagram.json`, el código de la simulación y el enlace del proyecto (`wokwi_link.txt`).
 
 ---
 
-## Conexiones v1.0
+## Circuito real
+
+![Circuito real del prototipo v3](circuito_real_v3.png)
+
+## Simulación en Wokwi
+
+![Simulación en Wokwi](simulacion_wokwi_v3.png)
+
+### Diferencias entre la simulación y el montaje real
+
+| En Wokwi | En el prototipo | Motivo |
+|---|---|---|
+| Potenciómetro en A0 | Sensor de corriente tipo ACS712 en A0 | Wokwi no simula el consumo del motor; el potenciómetro permite variar a mano la "corriente" |
+| LED verde (relé 1) y LED azul (relé 2) | Actuador lineal de 12 V conectado a los COM de ambos relés | Los LED muestran qué sentido de giro se activaría |
+| Pulsadores táctiles | Pulsadores Ø30 en la tapa del mueble | Mismos pines (6 y 3) |
+| Sensor ultrasónico HC-SR04 (pines 7 y 8) y LED piloto amarillo (pin 9) | No se montaron | No aparecen en el montaje final ni en la lista de piezas de los planos v3; el ciclo se inicia con el pulsador verde |
+
+---
+
+## Conexiones v3.0
 
 ### Lado de control (5 V)
 
 | Desde | Hasta | Función |
 |---|---|---|
-| Arduino **5V** | Columna roja (+) de la protoboard | Alimenta los relés |
-| Arduino **GND** | Columna azul (−) de la protoboard | Tierra común de botones y relés |
-| Protoboard **a10** | Columna azul (−) | Tierra del botón SALIR |
-| Protoboard **j12** | Arduino **pin 6** | Señal del botón SALIR (diagonal a a10) |
-| Protoboard **a20** | Columna azul (−) | Tierra del botón ENTRAR |
-| Protoboard **j22** | Arduino **pin 3** | Señal del botón ENTRAR (diagonal a a20) |
-| Relé 1 y relé 2 **VCC** | Columna roja (+) | Energía de los relés |
-| Relé 1 y relé 2 **GND** | Columna azul (−) | Tierra de los relés |
-| Relé 1 **IN** | Arduino **pin 4** | Orden de activación del relé 1 |
-| Relé 2 **IN** | Arduino **pin 5** | Orden de activación del relé 2 |
+| Cargador USB 5 V | Puerto USB del Arduino | Alimenta el Arduino y todo el lado de control |
+| Arduino **5V** | Riel rojo (+) de la protoboard | Reparte 5 V |
+| Arduino **GND** | Riel azul (−) de la protoboard | Tierra común |
+| Pulsador verde, borne 1 | Arduino **pin 6** | Señal COMPACTAR |
+| Pulsador verde, borne 2 | Riel (−) | Tierra del pulsador |
+| Pulsador rojo, borne 1 | Arduino **pin 3** | Señal PARO DE EMERGENCIA |
+| Pulsador rojo, borne 2 | Riel (−) | Tierra del pulsador |
+| Relé 1 y relé 2 **VCC** | Riel (+) | Energía de las bobinas |
+| Relé 1 y relé 2 **GND** | Riel (−) | Tierra de los relés |
+| Relé 1 **IN** | Arduino **pin 4** | Orden de AVANCE |
+| Relé 2 **IN** | Arduino **pin 5** | Orden de RETORNO |
+| Sensor **VCC** / **GND** | Riel (+) / riel (−) | Energía del sensor |
+| Sensor **OUT** | Arduino **A0** | Voltaje proporcional a la corriente |
 
-Botones: botón SALIR en e10, e12, f10, f12; botón ENTRAR en e20, e22, f20, f22, cruzando la canaleta central. La señal se toma **en diagonal** respecto de la tierra porque las patitas de una misma fila están unidas internamente; si se toman en la misma fila, el Arduino lee el botón como presionado todo el tiempo.
+### Lado de potencia (12 V): puente H con dos relés y sensor en serie
 
-### Lado de potencia (12 V) — puente H con dos relés
+| Desde | Hasta | Función |
+|---|---|---|
+| Red 220 V (L, N) | Fuente: bornes L y N | Entrada de la fuente |
+| Fuente **V+** | **NO** del relé 1 y **NO** del relé 2 (puente) | +12 V |
+| Fuente **V−** | Sensor de corriente, borne IP+ | La corriente de vuelta pasa por el sensor |
+| Sensor, borne IP− | **NC** del relé 1 y **NC** del relé 2 (puente) | −12 V |
+| **COM** del relé 1 | Cable 1 del actuador | Salida al motor |
+| **COM** del relé 2 | Cable 2 del actuador | Salida al motor |
 
 | Tornillo | Relé 1 | Relé 2 |
 |---|---|---|
-| **NO** | +12 V (fuente) | +12 V (puente desde relé 1) |
+| **NO** | +12 V | +12 V (puente) |
 | **COM** (medio) | Cable 1 del actuador, solo | Cable 2 del actuador, solo |
-| **NC** | −12 V (fuente) | −12 V (puente desde relé 1) |
+| **NC** | −12 V (desde el sensor) | −12 V (puente) |
 
-**Regla:** cada posición debe tener el mismo polo en ambos relés.
+**Regla:** cada posición (NO, COM, NC) debe tener el mismo polo en ambos relés.
 
 ### Por qué funciona
-- **En reposo**, ambos COM tocan el negativo (NC): los dos extremos del actuador tienen el mismo polo, no circula corriente y el actuador queda quieto.
-- **Relé 1 activo**: su COM pasa a +12 V. La corriente va de +12 V → actuador → −12 V y el actuador sale.
-- **Relé 2 activo**: la corriente circula en sentido contrario y el actuador entra.
+
+- **En reposo**, los dos COM tocan el NC (−12 V): los dos extremos del actuador están al mismo voltaje, no circula corriente y el actuador queda quieto.
+- **Relé 1 activo** (pin 4 en LOW): su COM pasa a +12 V. La corriente va de +12 V → cable 1 → motor → cable 2 → NC del relé 2 → sensor → V−. La placa **baja**.
+- **Relé 2 activo** (pin 5 en LOW): la corriente circula al revés por el motor y vuelve por el NC del relé 1 → sensor → V−. La placa **sube**.
+- **El sensor mide en los dos sentidos.** Como está en la línea de retorno común (V−), toda la corriente del actuador pasa por él, suba o baje la placa. Medir en V+ daría el mismo valor; en el montaje real quedó en V−.
 - Si el actuador se mueve al revés, se intercambian entre sí los dos cables del actuador en los COM.
 
 ---
 
-## Notas de Diseño
-- Hay **dos fuentes separadas**: el USB (5 V) alimenta el Arduino y el lado de control de los relés; el transformador de 12 V alimenta solo el actuador a través de los contactos de los relés. Dentro de cada relé ambos lados están aislados, por eso el computador puede quedar conectado durante las pruebas.
+## Notas de diseño
+
+- **Dos alimentaciones separadas.** El cargador USB (5 V) alimenta el Arduino, las bobinas de los relés y el sensor. La fuente de 12 V alimenta solo el actuador, a través de los contactos de los relés. Dentro de cada relé y dentro del sensor ambos lados están aislados.
+- **La fuente no limita la fuerza.** La fuente entrega hasta 16,7 A; el límite de 3 A lo impone el programa a partir de la lectura del sensor, para proteger la estructura de madera.
+- **Contactos de los relés:** 10 A a 30 V DC, suficiente para los 3 A de trabajo.
 - Los 12 V nunca deben conectarse al Arduino ni a la protoboard.

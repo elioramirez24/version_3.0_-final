@@ -1,81 +1,89 @@
-# Bill of Materials (BOM)
+# Bill of Materials (BOM) - v3.0
 
-## Lista de materiales v1.0 (electrónica)
+Los precios y proveedores quedan para completar por el equipo (`[completar]`).
 
-| Cantidad | Componente | Especificación | Fabricante | Código/SKU | Proveedor | Precio Unitario | Precio Total | Datasheet |
-|---|---|---|---|---|---|---|---|---|
-| 1 | Arduino UNO | ATmega328P, 5 V | Arduino | UNO R3 | [completar] | [CLP] | [CLP] | [URL] |
-| 2 | Módulo de relé 1 canal | Bobina 5 V, contactos 10 A / 250 VAC - 30 VDC, activo con LOW | Songle | JQC3F-05VDC-C | [completar] | [CLP] | [CLP] | [URL] |
-| 1 | Actuador lineal | 12 V DC, carrera 300 mm, 1500 N, 6 mm/s, ciclo 10 % | [completar] | ver etiqueta (…-405-300-C11) | [completar] | [CLP] | [CLP] | [URL] |
-| 1 | Fuente de poder 12 V DC | Reemplazó al transformador original de 12 V DC 2 A, que venía defectuoso | [completar] | [completar] | [completar] | [CLP] | [CLP] | — |
-| 2 | Pulsador táctil | 4 patitas, 6×6 mm | — | — | [completar] | [CLP] | [CLP] | — |
-| 1 | Protoboard | 830 puntos | — | — | [completar] | [CLP] | [CLP] | — |
-| — | Cables jumper macho-macho | Conexiones en la protoboard y al Arduino | — | — | [completar] | [CLP] | [CLP] | — |
-| — | Cables jumper macho-hembra | Conexión a los pines VCC, GND e IN de los relés | — | — | [completar] | [CLP] | [CLP] | — |
-| — | Cable de potencia rojo/negro | Para 12 V | — | — | [completar] | [CLP] | [CLP] | — |
-| 1 | Cable USB A-B | Programación y alimentación del Arduino | — | — | [completar] | [CLP] | [CLP] | — |
+## 1. Electrónica
 
-## Materiales de construcción (definidos por el equipo)
-
-| Cantidad | Material | Uso | Pieza(s) del modelo 3D | Proveedor | Precio Unitario | Precio Total |
+| Cant. | Componente | Especificación | Código / modelo | Proveedor | Precio unit. | Precio total |
 |---|---|---|---|---|---|---|
-| [completar] | Planchas de MDF (Trupán) | Paredes y placas del basurero | Chasis_Base, Contenedor_Basura, Tapa_Superior, Puerta_Frontal, Soporte_Actuador | [completar] | [CLP] | [CLP] |
-| [completar] | Listones cuadrados de madera | Refuerzo estructural del chasis y el marco | Marco_Superior (4 postes) | [completar] | [CLP] | [CLP] |
-| 1 | Lámina de metal | Placa compactadora | Placa_Compresora | [completar] | [CLP] | [CLP] |
-| [completar] | Soportes y anclajes mecánicos | Fijación del actuador lineal | Soporte_Actuador | [completar] | [CLP] | [CLP] |
-| [completar] | Bisagras estándar | Tapa y puerta | Bisagra_Tapa, Bisagra_Puerta | [completar] | [CLP] | [CLP] |
-| [completar] | Manillas | Apertura de tapa y puerta | — (no modelado) | [completar] | [CLP] | [CLP] |
-| [completar] | Imanes de neodimio pequeños | Cierre a presión de las puertas | Pestillo_Puerta (reemplazo) | [completar] | [CLP] | [CLP] |
-| [completar] | Tornillos | Ensamble general | — (no modelado) | [completar] | [CLP] | [CLP] |
-| [completar] | Adhesivos | Uniones de MDF y madera | — | [completar] | [CLP] | [CLP] |
+| 1 | Arduino UNO | ATmega328P, 5 V | UNO R3 | [completar] | [CLP] | [CLP] |
+| 2 | Módulo relé 1 canal | Bobina 5 V, contactos 10 A / 30 VDC, disparo alto/bajo (jumper), activo con LOW | Songle SRD-05VDC-SL-C | [completar] | [CLP] | [CLP] |
+| 1 | Sensor de corriente | Efecto Hall, salida analógica, bornera de 2 tornillos | Tipo ACS712 — [verificar versión: 05B, 20A o 30A] | [completar] | [CLP] | [CLP] |
+| 1 | Actuador lineal | 12 V DC, carrera 300 mm, 1500 N, 6 mm/s, ciclo de trabajo 10 %, fines de carrera internos | ARF03-12-A1-405-300-C11 | [completar] | [CLP] | [CLP] |
+| 1 | Fuente de poder | Entrada 220 V AC; salida 12 V DC, 200 W, 16,7 A | LED Power Supply …-200W-12V | [completar] | [CLP] | [CLP] |
+| 1 | Pulsador verde | Ø30 mm, momentáneo, montaje en panel | — | [completar] | [CLP] | [CLP] |
+| 1 | Pulsador rojo | Ø30 mm, momentáneo, montaje en panel | — | [completar] | [CLP] | [CLP] |
+| 1 | Protoboard | 830 puntos | — | [completar] | [CLP] | [CLP] |
+| — | Cables jumper | Macho-macho y macho-hembra | — | [completar] | [CLP] | [CLP] |
+| — | Cable de potencia | Rojo/negro y amarillo, para 12 V | — | [completar] | [CLP] | [CLP] |
+| 1 | Cable de poder 220 V | Con enchufe, para la fuente | — | [completar] | [CLP] | [CLP] |
+| 1 | Cargador USB 5 V + cable USB A-B | Alimentación del Arduino | — | [completar] | [CLP] | [CLP] |
+| — | Conectores y cinta aislante | Uniones de 12 V y aislación de borneras | — | [completar] | [CLP] | [CLP] |
 
-### Diferencias entre la lista de materiales y el modelo 3D
-- **Material:** el modelo usa acero en todas las piezas; la construcción real usa MDF, madera y una lámina de metal. Hay que actualizar los materiales en Fusion 360.
-- **Ejes guía (Guias_Lineales):** están en el modelo, pero no en la lista de materiales. Definir de qué se harán (por ejemplo, varilla de acero o tubo de aluminio) o si se eliminan.
-- **Placa compresora:** en el modelo es maciza de 1,5 cm; una lámina de metal es mucho más delgada. Ajustar el espesor en el modelo o indicar si la lámina va sobre una base de MDF.
-- **Cierre de la puerta:** el modelo tiene un pestillo; la construcción usa imanes de neodimio.
-- **Manillas y tornillos:** no están modelados.
+## 2. Estructura (según `diseno_3d/planos/planos_v3.pdf`, hoja 3)
 
-ℹ️ **[INFORMACIÓN COMPLEMENTARIA AGREGADA] Peso estimado con los materiales reales**, usando las mismas medidas del modelo y densidades típicas (MDF ≈ 0,75 g/cm³; madera de pino ≈ 0,5 g/cm³):
-- Piezas de MDF (12.081 cm³): ≈ **9,1 kg**
-- Postes de madera (1.411 cm³): ≈ **0,7 kg**
-- Total estructura sin placa ni actuador: ≈ **9,8 kg**, frente a 108,4 kg en acero.
-El peso de la placa dependerá del espesor y tipo de la lámina.
-
-## Estructura mecánica (según modelo de Fusion 360, material acero)
-
-| Cantidad | Pieza | Medidas | Material en el modelo | Masa |
+| N° | Pieza | Material | Cant. | Medidas (mm) |
 |---|---|---|---|---|
-| 1 | Chasis base | 45 × 45 × 100 cm | Acero | 46,75 kg |
-| 1 | Contenedor de basura | 39 × 39 × 55 cm | Acero | 15,63 kg |
-| 4 | Postes del marco superior | 2 × 4 × 44,7 cm | Acero | 11,08 kg (total) |
-| 1 | Tapa superior + bisagra | 45 × 45 × 1 cm | Acero | 16,16 kg |
-| 1 | Puerta frontal + bisagra + pestillo | 39 × 0,3 × 52 cm | Acero | 5,07 kg |
-| 1 | Placa compresora | 38 × 38 × 1,5 cm | Acero | 17,00 kg |
-| 2 | Ejes guía | Ø1,6 × 59,7 cm | Acero | 1,88 kg (total) |
-| 1 | Soporte del actuador | 39 × 39 × 1 cm | Acero | 11,81 kg |
-| | **Total estructura (sin actuador)** | | | **125,38 kg** |
+| 1 | Placa compactadora (2 tablas) | Madera | 1 | 300 × 300 × 50 |
+| 2 | Placa guía + 2 topes | Madera | 1 | 360 × 150 × 20 / 80 × 150 × 30 |
+| 3 | Repisa intermedia | Madera | 1 | 310 × 310 × 15 |
+| 4 | Viga soporte del actuador + 2 colgadores | Madera | 1 | 260 × 50 / 40 × 90 |
+| 5 | Tubo guía | Tubo Ø32 | 2 | Ø32 × 470 |
+| 6 | Puerta de carga | Acrílico 3 mm | 1 | 200 × 150 |
+| 7 | Actuador lineal 12 V | Aluminio | 1 | Carrera 300 |
+| 8 | Mueble (2 módulos) | Madera + acrílico | 1 | 380 × 370 × 850 |
+| — | Rieles laterales / listones de fondo | Madera | 2 + 2 | 40 × 780 / 50 × 220 |
+| — | Pestillos magnéticos | — | 2 | — |
+| 9 | Pulsador paro de emergencia (rojo) | — | 1 | Ø30, en la tapa |
+| 10 | Pulsador compactar (verde) | — | 1 | Ø30, en la tapa |
+| — | Fines de carrera | — | 2 | En el recorrido de la placa |
+| — | Bisagras, pomo y tornillos | Bronce / madera | var. | — |
+| — | Perno pivote del actuador | Acero | 1 | Ø8 |
 
-ℹ️ **[INFORMACIÓN COMPLEMENTARIA AGREGADA]** Componentes recomendados para versiones siguientes: resistencias de 220 Ω a 1 kΩ en la señal de cada botón (protección de pines), módulo reductor 12 V → 5 V (LM2596 o MP1584) para usar un solo enchufe, interruptor general en la línea de 12 V y una fuente de al menos 5 A para compactar con carga.
+**Sobre los fines de carrera:** el programa v3 detecta los extremos del recorrido por la caída de corriente que produce el corte de los fines de carrera internos del actuador, por lo que no usa entradas adicionales en el Arduino.
+
+## 3. Refuerzos agregados en la iteración 3
+
+| Cant. | Material | Uso | Motivo |
+|---|---|---|---|
+| [completar] | Escuadras de acero galvanizado con tornillos | Unión del techo y del piso con las paredes del mueble | Con la fuerza del actuador, la madera del techo y del piso cedía. Las escuadras reparten la carga en más tornillos (ver `testing/reportes/pruebas_carga_v3.md`) |
 
 ---
 
-## Archivos a Incluir
+## Presupuesto total
 
-- `bom_completo.xlsx` - Lista completa de materiales — **pendiente**
-- `bom_completo.pdf` - Versión PDF para visualización — **pendiente**
-- `datasheets/` - Carpeta con PDFs de componentes críticos — **pendiente**
+**Costo total estimado:** $[completar] CLP
+
+| Categoría | Costo |
+|---|---|
+| Microcontrolador y sensor | $[completar] |
+| Relés, pulsadores y protoboard | $[completar] |
+| Actuador | $[completar] |
+| Fuente de alimentación | $[completar] |
+| Estructura (madera, acrílico, tubos, herrajes) | $[completar] |
+| Refuerzos (escuadras de acero) | $[completar] |
+| Otros (cables, conectores) | $[completar] |
 
 ---
 
-## Presupuesto Total
+## Cambios respecto de la lista de materiales v1
 
-**Costo Total Estimado:** $[XXXXX] CLP
+| Cambio | Antes (v1) | Ahora (v3) | Motivo |
+|---|---|---|---|
+| Fuente | Transformador 12 V 2 A (defectuoso) y fuente de reemplazo | Fuente LED 12 V 200 W (16,7 A) | Tener capacidad de corriente de sobra para compactar |
+| Sensor | Ninguno | Sensor de corriente tipo ACS712 | Limitar la fuerza y detectar los extremos del recorrido |
+| Pulsadores | Táctiles de 6 × 6 mm en la protoboard | Ø30 mm en la tapa | Uso real por personas, botón de paro visible |
+| Estructura | Modelo en acero de 450 × 450 × 1000 mm (Fusion 360) | Mueble de madera de 380 × 370 × 850 mm | La construcción en madera ya estaba definida en la v1; el modelo usaba acero solo como material asignado |
+| Refuerzos | — | Escuadras de acero en techo y piso | La madera cedía con la fuerza del actuador |
+| Alimentación del Arduino | USB del computador | Cargador USB 5 V | Funcionamiento sin computador |
 
-### Desglose por Categoría
-- Microcontrolador: $X,XXX
-- Relés y botones: $X,XXX
-- Actuador: $X,XXX
-- Fuente de alimentación: $X,XXX
-- Estructura/Encapsulado: $X,XXX
-- Otros: $X,XXX
+---
+
+## Componentes recomendados para una versión siguiente
+
+ℹ **[INFORMACIÓN COMPLEMENTARIA AGREGADA]**
+- Marco de acero o aluminio (o tirantes metálicos entre techo y piso) para aprovechar los 1500 N del actuador.
+- Fusible de 5 A en la salida de 12 V e interruptor general.
+- Placa perforada soldada en lugar de la protoboard.
+- Celda de carga con módulo HX711 para medir la fuerza real.
+- Microinterruptor en la puerta de carga para que el ciclo solo funcione con la puerta cerrada.
