@@ -1,6 +1,10 @@
 # Recypress — Compactador automático de latas para puntos de reciclaje
 
-![Prototipo final](hardware/fotos/v3_02_vista_frontal_abierto.jpg)
+<p align="center">
+  <img src="hardware/fotos/v3_02_vista_frontal_abierto.jpg" alt="Prototipo final abierto" width="340">
+  &nbsp;
+  <img src="diseno_3d/planos/planos_v3_hoja3_isometrica_bom.png" alt="Vista isométrica de los planos" width="480">
+</p>
 
 ### Información del Equipo
 - **Integrantes:**
