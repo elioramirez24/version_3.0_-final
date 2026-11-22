@@ -159,4 +159,4 @@ Video del diagnóstico del transformador: `testing/evidencias/videos/prueba_tran
 - Instrucciones de ensamble de la v1: `instrucciones_ensamble_v1.md`
 - Modelo 3D: `diseno_3d/compactador_v1.f3z` (propiedades en `diseno_3d/fusion360/README.md`)
 - Programa de diagnóstico: `software/src/diagnostico/diagnostico.ino` (en la v3 se le agregó la lectura del sensor de corriente)
-- Etiqueta de git: `v1.0` (estado completo del repositorio al cerrar esta iteración)
+- Commit de git `8b274ca`: estado completo del repositorio al cerrar esta iteración (`git checkout 8b274ca`)

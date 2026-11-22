@@ -2,7 +2,7 @@
 
 ## Propósito
 
-Esta carpeta documenta la evolución del prototipo a través de las versiones desarrolladas durante el curso. El historial de git también se conserva completo: la etiqueta `v1.0` marca el estado del repositorio al cerrar la iteración 1 (importado de `proyecto_final_grupo_4`) y `v3.0` el estado final.
+Esta carpeta documenta la evolución del prototipo a través de las versiones desarrolladas durante el curso. El historial de git también se conserva completo: el commit `8b274ca` es el último de la iteración 1 (importado de `proyecto_final_grupo_4`, con sus autores y fechas originales) y los commits posteriores corresponden a la versión 3.0.
 
 ```
 iteraciones/

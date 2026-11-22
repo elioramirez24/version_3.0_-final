@@ -27,9 +27,9 @@ Compactar cada lata reduce el volumen que ocupa: una lata llevada a cerca del 30
 
 | Iteración | Qué se logró | Detalle |
 |---|---|---|
-| v1.0 | Control manual del actuador con 2 relés en banco de pruebas | `iteraciones/iteracion_1/` · etiqueta git `v1.0` |
+| v1.0 | Control manual del actuador con 2 relés en banco de pruebas | `iteraciones/iteracion_1/` · commit `8b274ca` |
 | v2.0 | Ciclo automático simulado en Wokwi y diseño en madera | `iteraciones/iteracion_2/` |
-| v3.0 | Prototipo construido, sensor de corriente, refuerzos de acero | `iteraciones/iteracion_3/` · etiqueta git `v3.0` |
+| v3.0 | Prototipo construido, sensor de corriente, refuerzos de acero | `iteraciones/iteracion_3/` |
 
 ---
 
