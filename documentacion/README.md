@@ -20,7 +20,7 @@
 | Proceso de diseño e iteraciones | `iteraciones/` |
 | Documentación técnica | `hardware/esquemas/`, `hardware/bom/`, `software/src/` |
 | Resultados de testing | `testing/reportes/pruebas_carga_v3.md`, `software/pruebas_pc/README.md` |
-| **Limitaciones** | `testing/reportes/pruebas_carga_v3.md` (estructura de madera, 5 latas paradas, 3 A ≈ 700 N) |
+| **Limitaciones** | `testing/reportes/pruebas_carga_v3.md` (estructura de madera, 5 latas paradas, umbral de 2,9 A, daño desde 3 A ≈ 700 N) |
 | Conclusiones y trabajo futuro | `iteraciones/iteracion_3/README.md` |
 
 ## Guion sugerido para la presentación (10 min)

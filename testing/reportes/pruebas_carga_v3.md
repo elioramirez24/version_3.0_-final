@@ -12,12 +12,12 @@
 |---|---|
 | Latas por ciclo | **Máximo 5, siempre paradas** |
 | Latas acostadas | **No permitidas** en esta versión |
-| Corriente máxima permitida por el programa | **3 A** |
-| Fuerza estimada a 3 A | **≈ 700 N** (equivale al peso de unos 71 kg) |
+| Corriente en que la estructura se daña | **3 A** (≈ 700 N, el peso de unos 71 kg) |
+| Umbral del programa | **2900 mA (2,9 A ≈ 665 N)**: al alcanzarlo la placa retrocede de inmediato |
 | Causa del límite | La **estructura de madera**, no el actuador ni la fuente |
 | Medida correctiva | Escuadras de acero en el techo y en el piso, y corte por corriente en el programa |
 
-El actuador puede empujar hasta 1500 N y la fuente puede entregar hasta 16,7 A, pero el mueble de madera no resiste esa fuerza. Por eso el programa detiene la compactación cuando la corriente llega a 3 A.
+El actuador puede empujar hasta 1500 N y la fuente puede entregar hasta 16,7 A, pero el mueble de madera no resiste esa fuerza. Por eso el programa hace retroceder la placa apenas la corriente llega a 2,9 A, con un margen de 0,1 A antes de los 3 A en que la máquina se daña.
 
 ---
 
@@ -65,7 +65,8 @@ Es un valor cercano al rango de 3 a 5 A que se estimó en la iteración 1 para e
 | 1,0 | 0 | 0 kg | Actuador en vacío |
 | 2,0 | 350 | 36 kg | Permitido |
 | 2,5 | 525 | 54 kg | Permitido |
-| **3,0** | **700** | **71 kg** | **Límite del programa** |
+| **2,9** | **665** | **68 kg** | **Umbral del programa: retroceso inmediato** |
+| 3,0 | 700 | 71 kg | La estructura de madera se daña |
 | 4,0 | 1050 | 107 kg | No permitido: la estructura cede |
 | 5,3 | 1500 | 153 kg | Máximo del actuador |
 
@@ -93,7 +94,7 @@ Es un valor cercano al rango de 3 a 5 A que se estimó en la iteración 1 para e
 | Medida | Dónde | Efecto |
 |---|---|---|
 | Escuadras de acero | Techo y piso del mueble (fotos `hardware/fotos/v3_08_tapa_escuadras_superior.jpg` y `v3_09_tapa_escuadras_angulo.jpg`) | Reparten la fuerza y evitan que se suelten las uniones |
-| Corte por corriente a 3 A | `software/src/compactador_v3/compactador_v3.ino` (`CORRIENTE_LIMITE_A`) | El actuador nunca empuja más de ≈ 700 N |
+| Umbral de 2900 mA con retroceso inmediato | `software/src/compactador_v3/compactador_v3.ino` (`UMBRAL_CORRIENTE_MA`) | El actuador no llega a los 3 A (≈ 700 N) en que se daña la estructura |
 | Máximo 5 latas paradas | Manual de operación (`software/docs/README.md`) | La compactación termina antes de llegar al límite de la estructura |
 | Prohibición de latas acostadas | Manual de operación | Evita cargas que superan la resistencia del prototipo |
 
@@ -104,4 +105,4 @@ Es un valor cercano al rango de 3 a 5 A que se estimó en la iteración 1 para e
 - Construir el marco que recibe la fuerza (techo, piso y uniones) en **acero o aluminio**, o en madera de mayor espesor con pernos pasantes en vez de tornillos, para aprovechar los 1500 N del actuador.
 - Unir el techo y el piso con **tirantes metálicos** (por ejemplo, varillas roscadas) para que la fuerza del actuador no pase por las paredes de madera.
 - Medir la fuerza real con una **celda de carga** y recalibrar el modelo $F(I)$ con varios puntos.
-- Repetir la prueba de cantidad de latas después del refuerzo, subiendo el límite de corriente en pasos de 0,25 A.
+- Repetir la prueba de cantidad de latas después de un refuerzo mayor, subiendo el umbral en pasos de 250 mA.

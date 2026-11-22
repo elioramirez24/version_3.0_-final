@@ -324,7 +324,7 @@ REF = [
  (3, "Pulsador rojo Ø30", "Entrada digital, pin 3 (INPUT_PULLUP). Se revisa en cada vuelta del programa.",
      "PARO DE EMERGENCIA en la tapa: corta ambos relés al instante."),
  (4, "Sensor de corriente (tipo ACS712)", "En serie con la línea V− de 12 V; entrega un voltaje proporcional a la corriente en A0.",
-     "Mide el esfuerzo del actuador. A 3 A (≈ 700 N) el programa detiene la compactación."),
+     "Mide el esfuerzo del actuador. Al llegar a 2900 mA (2,9 A) la placa retrocede de inmediato."),
  (5, "Módulo relé 1", "Interruptor de 10 A con bobina de 5 V; entrada IN en el pin 4 (se activa con LOW).",
      "AVANCE: conecta +12 V al cable 1 del actuador y la placa baja a compactar."),
  (6, "Módulo relé 2", "Interruptor de 10 A con bobina de 5 V; entrada IN en el pin 5 (se activa con LOW).",
@@ -332,7 +332,7 @@ REF = [
  (7, "Fuente 12 V DC · 200 W", "Fuente de potencia separada del control; capacidad máxima 16,7 A.",
      "Alimenta solo el actuador, a través de los relés. Se conecta a 220 V."),
  (8, "Actuador lineal 12 V", "Motor DC con tornillo: 1500 N máx., carrera 300 mm, 6 mm/s, fines de carrera internos.",
-     "Empuja la placa compactadora por los 2 tubos guía. Limitado a ≈ 700 N por la estructura de madera."),
+     "Empuja la placa por los 2 tubos guía. Máx. ≈ 665 N (2,9 A): desde 3 A la madera se daña."),
  (9, "Protoboard", "Rieles + (5 V) y − (GND) que reparten la alimentación de control.",
      "Une la tierra de los pulsadores, los relés y el sensor con el Arduino."),
  (10, "Cargador USB 5 V", "Alimentación del lado de control, aislada de los 12 V por los relés.",
@@ -376,7 +376,7 @@ PAGE = f'''<!DOCTYPE html>
   <div class="grid">{"".join(cards)}</div>
   <div class="notes">
     <b>Puente H con dos relés:</b> en reposo los dos COM quedan unidos a V− y el actuador no se mueve. Al activar el relé 1, su COM pasa a +12 V y la placa baja; al activar el relé 2, la corriente circula al revés y la placa sube.
-    <b>Límite de corriente:</b> el programa detiene el avance cuando el sensor marca 3 A (≈ 700 N), porque sobre ese valor la estructura de madera comenzaba a ceder. Por eso el prototipo admite como máximo 5 latas paradas.
+    <b>Umbral de corriente:</b> cuando el sensor marca 2900 mA (2,9 A ≈ 665 N) el programa corta el avance y la placa retrocede de inmediato; nunca se llega a 3 A (≈ 700 N), donde la estructura de madera se daña. Por eso el prototipo admite como máximo 5 latas paradas.
     <b>Pines</b> iguales a la simulación en Wokwi (pulsadores 6 y 3, relés 4 y 5, sensor A0); el pin 2 no se usa porque quedó dañado en la iteración 1.
   </div>
 </div></body></html>'''

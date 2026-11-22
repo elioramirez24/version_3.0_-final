@@ -21,7 +21,7 @@ Validar el funcionamiento del prototipo, conocer sus límites reales y medir su 
 |---|---|---|---|
 | Control manual del actuador con 2 relés | v1 | ✅ Sale y entra con los botones (tras reemplazar la fuente defectuosa) | `iteraciones/iteracion_1/README.md` |
 | Lógica del ciclo automático | v3 | ✅ 5 escenarios correctos; los dos relés nunca activos a la vez | `software/pruebas_pc/README.md` |
-| Carga en el prototipo real | v3 | ⚠️ Funciona con **máximo 5 latas paradas**; sobre 3 A (≈ 700 N) la estructura de madera cede; latas acostadas no permitidas | `reportes/pruebas_carga_v3.md` |
+| Carga en el prototipo real | v3 | ⚠️ Funciona con **máximo 5 latas paradas**; sobre 3 A (≈ 700 N) la estructura de madera cede, por eso el programa retrocede a 2,9 A; latas acostadas no permitidas | `reportes/pruebas_carga_v3.md` |
 | Refuerzo con escuadras de acero | v3 | ✅ Techo y piso reforzados | `hardware/fotos/v3_08_*.jpg`, `v3_09_*.jpg` |
 | Testing con usuarios (mín. 5) | — | Pendiente | — |
 

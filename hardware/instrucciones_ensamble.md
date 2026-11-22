@@ -1,6 +1,6 @@
 # Instrucciones de ensamble - Compactador de latas (v3.0)
 
-**Resultado esperado:** al presionar una vez el pulsador verde, la placa baja, se detiene al llegar a 3 A (≈ 700 N) o al final del recorrido y vuelve a subir. El pulsador rojo detiene todo en cualquier momento.
+**Resultado esperado:** al presionar una vez el pulsador verde, la placa baja y retrocede de inmediato al llegar a 2900 mA (2,9 A) o al final del recorrido. El pulsador rojo detiene todo en cualquier momento.
 
 Las instrucciones de la v1 (control manual en protoboard) están en `iteraciones/iteracion_1/instrucciones_ensamble_v1.md`.
 
@@ -119,7 +119,7 @@ Cada relé tiene tres tornillos: **NO**, **COM** (el del medio) y **NC**.
 ### Paso D3: prueba con 12 V, sin latas
 1. Alejar las manos de la cámara. Enchufar la fuente **sin presionar nada**: el actuador debe quedar **quieto**. Si se mueve solo, desenchufar de inmediato y revisar la Parte C.
 2. Presionar una vez el verde: la placa debe **bajar**. Si sube, desenchufar e intercambiar entre sí los dos cables del actuador en los COM.
-3. El Monitor Serie debe mostrar cerca de **1 A** mientras baja.
+3. El Monitor Serie debe mostrar cerca de **1000 mA** mientras baja.
 4. Al llegar al fondo debe aparecer `Fin de carrera inferior` y la placa debe subir sola.
 5. Repetir y presionar el rojo a mitad de camino: el actuador debe detenerse al instante.
 
@@ -133,12 +133,12 @@ Cada relé tiene tres tornillos: **NO**, **COM** (el del medio) y **NC**.
 
 ### Paso D4: prueba con latas
 1. Cargar **como máximo 5 latas paradas**. Nunca latas acostadas.
-2. Presionar el verde y observar la corriente en el Monitor Serie: la compactación debe terminar con el mensaje `Limite de 3 A (~700 N)`.
+2. Presionar el verde y observar la corriente en el Monitor Serie: la compactación debe terminar con el mensaje `Umbral de 2900 mA: retroceso inmediato`, y al final debe aparecer la corriente máxima del ciclo (bajo 3000 mA).
 3. Si la madera cruje o se deforma, presionar el rojo y revisar las escuadras de acero.
 
 ---
 
 ## Uso y cuidados
 - Ciclo de trabajo del actuador: 10 %. Unos 9 minutos de descanso por cada minuto de uso.
-- No aumentar el límite de 3 A del programa mientras la estructura sea de madera.
+- No aumentar el umbral de 2900 mA del programa mientras la estructura sea de madera.
 - Manual de operación completo: `software/docs/README.md`.

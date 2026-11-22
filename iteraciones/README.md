@@ -21,7 +21,7 @@ iteraciones/
 | **Control** | Manual: se mueve mientras se mantiene presionado un botón | Automático de un toque (simulado) | Automático de un toque (real) |
 | **Sensores** | Ninguno | HC-SR04 y potenciómetro como sensor de corriente (simulados) | Sensor de corriente tipo ACS712 |
 | **Actuadores** | Actuador lineal 12 V, 1500 N, 300 mm | LED en lugar del actuador | Actuador lineal 12 V, 1500 N, 300 mm |
-| **Seguridad** | Ninguna | Paro de emergencia | Paro de emergencia + límite de 3 A |
+| **Seguridad** | Ninguna | Paro de emergencia | Paro de emergencia + umbral de 2,9 A con retroceso inmediato |
 | **Alimentación** | Transformador 12 V 2 A (defectuoso) → fuente de reemplazo | — | Fuente 12 V 200 W + cargador USB 5 V |
 | **Estructura** | Modelo de acero en Fusion 360 (450 × 450 × 1000 mm) | Diseño en madera | Mueble de madera de 380 × 370 × 850 mm con escuadras de acero |
 | **Conectividad** | Ninguna | Ninguna | Ninguna |
@@ -65,7 +65,7 @@ iteraciones/
 
 ### Software
 **De v1 a v2:** de "mover mientras se presiona" a un ciclo automático con paro de emergencia.  
-**De v2 a v3:** corte a 3 A, detección de fin de recorrido por corriente, filtro del pico de arranque y pruebas en PC.
+**De v2 a v3:** umbral de 2900 mA con retroceso inmediato, detección de fin de recorrido por corriente, filtro del pico de arranque y pruebas en PC.
 
 ### Diseño 3D
 **De v1 a v2:** del modelo en acero (135 kg) a un mueble de madera fabricable.  

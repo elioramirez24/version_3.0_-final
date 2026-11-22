@@ -58,7 +58,7 @@ struct Modelo {
 
 Modelo M;
 const char *nombreEstado() {
-  static const char *n[] = {"REPOSO", "AVANCE", "PAUSA", "RETORNO", "EMERGENCIA"};
+  static const char *n[] = {"REPOSO", "AVANCE", "INVERSION", "RETORNO", "EMERGENCIA"};
   return n[estado];
 }
 void correr(double segundos) {
@@ -77,30 +77,48 @@ void reiniciar(double contacto) {
   assert(sim::pinVal[4] == HIGH && sim::pinVal[5] == HIGH);   // relés apagados al encender
 }
 void imprimirEventos() {
-  for (auto &l : sim::log) if (l.find(">>") != std::string::npos || l.find("listo") != std::string::npos) std::cout << "   " << l << "\n";
+  for (auto &l : sim::log) if (l.find(">>") != std::string::npos || l.find("maxima del ciclo") != std::string::npos) std::cout << "   " << l << "\n";
 }
 
 int main() {
-  // ---- A: 5 latas paradas; la placa las toca a 180 mm y la corriente sube 0,1 A/mm
+  // ---- A: 5 latas paradas; la placa las toca a 180 mm y la corriente sube 0,1 A por mm
   reiniciar(180);
   pulsar(sim::botonVerde);
   assert(estado == AVANCE);
-  double xLimite = -1;
-  for (int i = 0; i < 20000 && estado == AVANCE; i++) { loop(); sim::t += 3; M.paso(0.003); }
-  xLimite = M.x;
-  assert(estado == PAUSA);
-  correr(0.5); assert(estado == RETORNO);
+  double maxReal = 0;                 // corriente real máxima con el relé de avance activo
+  unsigned long tUmbral = 0, tCorte = 0;
+  for (int i = 0; i < 20000 && estado == AVANCE; i++) {
+    loop();
+    if (sim::pinVal[4] == LOW) {
+      double ireal = M.I(sim::t);
+      if (sim::t - M.arranque > 300) maxReal = std::max(maxReal, ireal);
+      if (tUmbral == 0 && sim::t - M.arranque > 400 && ireal >= 2.9) tUmbral = sim::t;
+    } else if (tCorte == 0) tCorte = sim::t;
+    sim::t += 3; M.paso(0.003);
+  }
+  double xLimite = M.x;
+  assert(estado == INVERSION);
+  assert(maxReal < 3.0);                         // nunca llega a 3 A
+  // El ADC del UNO mide en escalones de ~49 mA con el ACS712-20A: el corte ocurre dentro de
+  // un escalón sobre 2,9 A, siempre bajo 3 A.
+  assert(maxReal < 2.95);
+  (void)tUmbral; (void)tCorte;
+  unsigned long tInicioInversion = sim::t;
+  while (estado == INVERSION) { loop(); sim::t += 3; M.paso(0.003); }
+  assert(estado == RETORNO && sim::pinVal[5] == LOW);
+  unsigned long msHastaRetroceso = sim::t - tInicioInversion;
+  assert(msHastaRetroceso <= 60);
   correr(70); assert(estado == REPOSO); assert(M.x == 0);
   assert(sim::ambosActivos == 0);
-  std::cout << std::unitbuf << "A) 5 latas: se detuvo en x = " << xLimite << " mm (I ~ " << 1 + 0.1 * (xLimite - 180)
-            << " A), volvio arriba. OK\n";
+  std::cout << std::unitbuf << "A) 5 latas: corte en x = " << xLimite << " mm; corriente real maxima = " << maxReal
+            << " A (< 3 A); retroceso a los " << msHastaRetroceso << " ms del corte. OK\n";
   imprimirEventos();
 
   // ---- B: sin latas: llega al fin de carrera inferior (300 mm) y vuelve
   reiniciar(1e9);
   pulsar(sim::botonVerde);
   for (int i = 0; i < 30000 && estado == AVANCE; i++) { loop(); sim::t += 3; M.paso(0.003); }
-  assert(estado == PAUSA && M.x > 299);
+  assert(estado == INVERSION && M.x > 299);
   correr(60); assert(estado == REPOSO && M.x == 0);
   assert(sim::ambosActivos == 0);
   std::cout << "B) sin latas: fin de carrera inferior -> retorno -> reposo. OK\n";

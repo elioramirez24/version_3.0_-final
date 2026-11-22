@@ -83,6 +83,6 @@
 ## Notas de diseño
 
 - **Dos alimentaciones separadas.** El cargador USB (5 V) alimenta el Arduino, las bobinas de los relés y el sensor. La fuente de 12 V alimenta solo el actuador, a través de los contactos de los relés. Dentro de cada relé y dentro del sensor ambos lados están aislados.
-- **La fuente no limita la fuerza.** La fuente entrega hasta 16,7 A; el límite de 3 A lo impone el programa a partir de la lectura del sensor, para proteger la estructura de madera.
-- **Contactos de los relés:** 10 A a 30 V DC, suficiente para los 3 A de trabajo.
+- **La fuente no limita la fuerza.** La fuente entrega hasta 16,7 A; el umbral de 2,9 A lo impone el programa a partir de la lectura del sensor, para proteger la estructura de madera.
+- **Contactos de los relés:** 10 A a 30 V DC, suficiente para los 2,9 A máximos de trabajo.
 - Los 12 V nunca deben conectarse al Arduino ni a la protoboard.

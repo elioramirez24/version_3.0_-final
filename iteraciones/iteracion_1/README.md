@@ -142,7 +142,7 @@ Video del diagnóstico del transformador: `testing/evidencias/videos/prueba_tran
 
 | Mejora planificada | Resultado |
 |---|---|
-| Medir el consumo al compactar | ✅ Se agregó un sensor de corriente; el programa limita a 3 A (≈ 700 N) |
+| Medir el consumo al compactar | ✅ Se agregó un sensor de corriente; el programa retrocede al llegar a 2,9 A (antes de los 3 A ≈ 700 N) |
 | Fuente de ≥ 5 A | ✅ Fuente de 12 V y 200 W (16,7 A) |
 | Modo de un solo toque | ✅ Ciclo automático con el pulsador verde y paro de emergencia con el rojo |
 | Sensor de presencia de lata | ⚠️ Simulado en Wokwi (HC-SR04); no se montó en el prototipo final |

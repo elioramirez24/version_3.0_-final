@@ -37,8 +37,8 @@ Versión final del prototipo: mueble de madera con el actuador lineal, ciclo aut
 6. **Escuadras de acero en el techo y el piso** (ver "Problemas encontrados").
 
 ### Software
-- Programa `compactador_v3.ino` con máquina de estados: REPOSO, AVANCE, PAUSA, RETORNO y EMERGENCIA.
-- Corte de la compactación a **3 A (≈ 700 N)**.
+- Programa `compactador_v3.ino` con máquina de estados: REPOSO, AVANCE, INVERSION, RETORNO y EMERGENCIA.
+- Umbral de **2900 mA (2,9 A ≈ 665 N)**: al alcanzarlo la placa retrocede de inmediato (se corta en la misma vuelta del programa y se invierte a los 50 ms). Nunca se llega a 3 A, donde la máquina se daña.
 - Detección de los extremos del recorrido por la caída de corriente (fines de carrera internos del actuador), sin interruptores adicionales.
 - Se ignora el pico de corriente del arranque y se confirma cada condición durante un tiempo mínimo.
 - Pruebas de la lógica en un PC (`software/pruebas_pc/`): 5 escenarios correctos.
@@ -77,7 +77,7 @@ Los problemas de esta iteración fueron **principalmente de hardware**: el mater
 1. **La estructura de madera cedía sobre ≈ 700 N.**
    - Descripción: cuando la corriente del actuador superaba los **3 A**, la fuerza (≈ 700 N) excedía lo que soportaba el mueble y este tendía a romperse, sobre todo en el techo (donde cuelga el actuador) y en el piso (donde se apoyan las latas).
    - Causa: el actuador empuja la placa hacia abajo y, con la misma fuerza, empuja el techo hacia arriba; las uniones atornilladas de madera no resisten esa carga.
-   - Solución: **escuadras de acero** en el techo y el piso, y **corte por corriente a 3 A** en el programa.
+   - Solución: **escuadras de acero** en el techo y el piso, y **umbral de 2,9 A con retroceso inmediato** en el programa.
 2. **Capacidad limitada a 5 latas paradas.**
    - Descripción: con más de 5 latas paradas, la corriente necesaria superaba los 3 A.
    - Solución: el prototipo queda limitado a **máximo 5 latas paradas** por ciclo.
@@ -94,7 +94,7 @@ Estimación de fuerza, explicación física y recomendaciones: `testing/reportes
 ### Funcionalidad
 ✅ Ciclo automático de un toque  
 ✅ Paro de emergencia con prioridad  
-✅ Límite de fuerza por corriente (3 A ≈ 700 N)  
+✅ Umbral de corriente de 2,9 A (≈ 665 N) con retroceso inmediato  
 ✅ Detección de fin de recorrido sin sensores adicionales  
 ✅ Funciona sin computador (cargador USB + fuente de 12 V)  
 ⚠️ Máximo 5 latas paradas; latas acostadas no permitidas  
@@ -112,7 +112,7 @@ Pendiente. Protocolo y métricas propuestas en `testing/README.md`.
 | Control | Manual | Automático (simulado) | Automático (real) |
 | Medición | Ninguna | Potenciómetro | Sensor de corriente |
 | Estructura | Modelo de acero | Diseño en madera | Mueble de madera reforzado con escuadras de acero |
-| Fuerza útil | No medida | — | ≈ 700 N (3 A) |
+| Fuerza útil | No medida | — | ≈ 665 N (umbral de 2,9 A) |
 | Capacidad | — | — | 5 latas paradas |
 
 ---

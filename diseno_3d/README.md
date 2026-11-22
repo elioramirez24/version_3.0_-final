@@ -49,7 +49,7 @@
 | Mandos | No modelados | Pulsadores Ø30 en la tapa |
 | Reparación | — | Puertas abatibles, actuador con un solo perno, módulos separables |
 
-**Consecuencia del cambio de material:** la madera hizo el prototipo fabricable y liviano, pero limitó la fuerza útil a ≈ 700 N (3 A) frente a los 1500 N del actuador. Detalle en `testing/reportes/pruebas_carga_v3.md`.
+**Consecuencia del cambio de material:** la madera hizo el prototipo fabricable y liviano, pero limitó la fuerza útil a ≈ 665 N (umbral de 2,9 A en el programa; la madera se daña desde ≈ 700 N, 3 A) frente a los 1500 N del actuador. Detalle en `testing/reportes/pruebas_carga_v3.md`.
 
 ---
 
@@ -60,7 +60,7 @@
 - [x] Protección de la electrónica (separada de la cámara de compactación por la repisa intermedia)
 - [x] Fácil acceso para mantenimiento (puertas frontales abatibles)
 - [ ] Ventilación de la fuente de 12 V (revisar si la repisa queda cerrada)
-- [ ] Resistencia de la estructura a la fuerza completa del actuador (limitada a ≈ 700 N)
+- [ ] Resistencia de la estructura a la fuerza completa del actuador (se daña desde ≈ 700 N)
 
 ### Fabricación
 - Cortes de madera con tolerancia de ±2 mm; agujeros +1/0 mm.

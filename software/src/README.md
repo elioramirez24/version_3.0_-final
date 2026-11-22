@@ -4,7 +4,7 @@
 
 | Archivo | Función |
 |---|---|
-| `compactador_v3/compactador_v3.ino` | **Programa definitivo.** Ciclo automático con un toque: baja, se detiene a 3 A (≈ 700 N) o en el fin de carrera, y vuelve a subir. Paro de emergencia en todo momento |
+| `compactador_v3/compactador_v3.ino` | **Código oficial.** Ciclo automático con un toque: baja y, al llegar al umbral de 2900 mA (2,9 A ≈ 665 N) o al fin de carrera, retrocede de inmediato. Paro de emergencia en todo momento |
 | `diagnostico/diagnostico.ino` | Prueba por separado los relés, los pulsadores y el sensor de corriente (Monitor Serie a 9600 baudios) |
 
 Cada programa está en su propia carpeta porque Arduino IDE exige que el archivo `.ino` esté dentro de una carpeta con su mismo nombre.
@@ -37,12 +37,12 @@ Los módulos de relé se activan con **LOW** y se apagan con **HIGH** (`RELE_ENC
 stateDiagram-v2
     [*] --> REPOSO
     REPOSO --> AVANCE: pulsador verde
-    AVANCE --> PAUSA: corriente ≥ 3 A (≈ 700 N)
-    AVANCE --> PAUSA: corriente ≈ 0 (fin de carrera inferior)
-    AVANCE --> PAUSA: 60 s sin terminar
-    PAUSA --> RETORNO: 0,3 s con ambos relés apagados
+    AVANCE --> INVERSION: corriente ≥ 2900 mA (retroceso inmediato)
+    AVANCE --> INVERSION: corriente ≈ 0 (fin de carrera inferior)
+    AVANCE --> INVERSION: 60 s sin terminar
+    INVERSION --> RETORNO: 50 ms con ambos relés apagados
     RETORNO --> REPOSO: corriente ≈ 0 (fin de carrera superior) o 60 s
-    RETORNO --> EMERGENCIA: corriente ≥ 3 A (algo traba la subida)
+    RETORNO --> EMERGENCIA: corriente ≥ 2900 mA (algo traba la subida)
     REPOSO --> EMERGENCIA: pulsador rojo
     AVANCE --> EMERGENCIA: pulsador rojo
     RETORNO --> EMERGENCIA: pulsador rojo
@@ -52,21 +52,27 @@ stateDiagram-v2
 | Estado | Relé 1 | Relé 2 | Actuador | Sale del estado cuando… |
 |---|---|---|---|---|
 | REPOSO | Apagado | Apagado | Detenido arriba | Se presiona el verde |
-| AVANCE | Encendido | Apagado | Baja y compacta | La corriente llega a 3 A, cae casi a 0 o pasan 60 s |
-| PAUSA | Apagado | Apagado | Detenido | Pasan 0,3 s (evita invertir el motor de golpe) |
+| AVANCE | Encendido | Apagado | Baja y compacta | La corriente llega a **2900 mA**, cae casi a 0 o pasan 60 s |
+| INVERSION | Apagado | Apagado | Detenido | Pasan 50 ms (lo justo para que un relé se suelte antes de que cierre el otro) |
 | RETORNO | Apagado | Encendido | Sube | La corriente cae casi a 0 (llegó arriba) o pasan 60 s |
 | EMERGENCIA | Apagado | Apagado | Detenido | Se suelta el rojo y se presiona el verde: la placa solo sube |
 
+### Umbral de 2900 mA y retroceso inmediato
+
+- **Por qué 2,9 A y no 3 A.** Desde 3 A (≈ 700 N) la estructura de madera se daña. El umbral queda 0,1 A antes, como margen de seguridad.
+- **Qué tan rápido reacciona.** En cada vuelta del programa (unos 3 ms) se mide la corriente. La primera lectura que llega a 2900 mA apaga el relé de avance en esa misma vuelta, sin esperar confirmación. A los 50 ms se activa el relé de retorno y la placa sube.
+- **Resolución del sensor.** El Arduino mide el voltaje en escalones de 4,9 mV. Con el ACS712-20A (100 mV/A), cada escalón equivale a unos 49 mA, así que el corte ocurre entre ≈ 2,88 A y ≈ 2,93 A: siempre bajo 3 A. Con la versión 05B (185 mV/A) los escalones son de unos 26 mA.
+- **El pico de arranque** de los primeros 400 ms no se considera: ocurre con la placa arriba y sin carga, cuando el motor recién parte.
+
 ### Por qué se usa la corriente
 
-- **Para limitar la fuerza.** En un motor de corriente continua, la fuerza que hace es proporcional a la corriente que consume. Medir la corriente es una forma barata de "medir" la fuerza sin un sensor de fuerza. El límite de 3 A (≈ 700 N) es el máximo que soportó la estructura de madera (ver `testing/reportes/pruebas_carga_v3.md`).
+- **Para limitar la fuerza.** En un motor de corriente continua, la fuerza que hace es proporcional a la corriente que consume. Medir la corriente es una forma barata de "medir" la fuerza sin un sensor de fuerza. La estructura de madera se daña desde 3 A (≈ 700 N); por eso el umbral es 2,9 A (ver `testing/reportes/pruebas_carga_v3.md`).
 - **Para saber dónde está la placa.** El actuador tiene fines de carrera internos que cortan el motor en los extremos del recorrido. Cuando eso pasa, la corriente cae casi a 0; el programa lo detecta y no necesita interruptores adicionales.
 
 ### Detalles que evitan errores
 
-- El pico de corriente de los primeros 0,6 s de cada arranque no se considera (un motor siempre consume más al partir).
-- La corriente alta debe mantenerse 150 ms seguidos y la baja 800 ms seguidos antes de actuar, para que el ruido del motor no detenga el ciclo por error.
-- Antes de encender un relé siempre se apaga el otro. Si ambos quedaran activos, los dos cables del actuador quedarían en +12 V.
+- La corriente alta actúa de inmediato (primera lectura sobre el umbral). La corriente baja debe mantenerse 800 ms seguidos antes de considerar que se llegó al fin de carrera, para que una lectura aislada no termine el ciclo por error.
+- Antes de encender un relé siempre se apaga el otro. Si ambos quedaran activos, los dos cables del actuador quedarían en +12 V y el actuador no se movería.
 - Después de un paro, el pulsador verde nunca hace bajar la placa: solo la sube a su posición segura.
 
 ---
@@ -76,10 +82,11 @@ stateDiagram-v2
 | Constante | Valor | Qué controla |
 |---|---|---|
 | `SENSIBILIDAD_V_POR_A` | 0,100 | Sensibilidad del ACS712: 0,185 (versión 5 A), 0,100 (20 A) o 0,066 (30 A). **Verificar la versión del módulo** |
-| `CORRIENTE_LIMITE_A` | 3,0 | Corriente máxima al compactar (≈ 700 N). No subirla con la estructura de madera actual |
-| `CORRIENTE_FIN_CARRERA_A` | 0,30 | Bajo este valor se considera que el motor se detuvo en un extremo |
+| `UMBRAL_CORRIENTE_MA` | 2900 | Umbral en miliamperes (2,9 A ≈ 665 N): al llegar, retroceso inmediato. **No subirlo:** desde 3000 mA la estructura se daña |
+| `CORRIENTE_FIN_CARRERA_MA` | 300 | Bajo este valor (mA) se considera que el motor se detuvo en un extremo |
 | `T_AVANCE_MAX_MS` / `T_RETORNO_MAX_MS` | 60 000 | Tiempo máximo de cada movimiento (300 mm a 6 mm/s = 50 s) |
-| `T_IGNORAR_ARRANQUE_MS` | 600 | Tiempo en que se ignora el pico de arranque |
+| `T_IGNORAR_ARRANQUE_MS` | 400 | Tiempo en que se ignora el pico de arranque |
+| `T_INVERSION_MS` | 50 | Pausa entre apagar el avance y encender el retroceso |
 
 ---
 
@@ -88,7 +95,7 @@ stateDiagram-v2
 - Verificar que los números de pin del código coincidan con el cableado **antes** de subirlo.
 - Nunca configurar como `OUTPUT` un pin conectado a un pulsador.
 - Hacer siempre la prueba en seco (sin 12 V) con `diagnostico.ino` después de cualquier cambio de cableado.
-- No aumentar `CORRIENTE_LIMITE_A` sin reforzar antes la estructura.
+- No aumentar `UMBRAL_CORRIENTE_MA` sin reforzar antes la estructura.
 
 ## Estándares de código
 

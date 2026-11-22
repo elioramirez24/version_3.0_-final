@@ -56,6 +56,9 @@ struct SerialSim {
   void print(const __FlashStringHelper *s) { linea += reinterpret_cast<const char *>(s); }
   void print(float f, int d = 2) { char b[32]; snprintf(b, sizeof b, "%.*f", d, f); linea += b; }
   void print(double f, int d = 2) { print((float)f, d); }
+  void print(long v) { linea += std::to_string(v); }
+  void print(int v) { linea += std::to_string(v); }
+  void print(unsigned long v) { linea += std::to_string(v); }
   void println(const char *s) { linea += s; flush(); }
   void println(const __FlashStringHelper *s) { linea += reinterpret_cast<const char *>(s); flush(); }
   void flush() {

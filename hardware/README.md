@@ -22,7 +22,7 @@ Las instrucciones y conexiones de la v1 están en `iteraciones/iteracion_1/`.
 | 1 | **Arduino UNO** | Lee los pulsadores y el sensor; decide cuándo bajar, parar y subir la placa |
 | 2 | **Pulsador verde Ø30** (tapa) | COMPACTAR: inicia el ciclo automático |
 | 3 | **Pulsador rojo Ø30** (tapa) | PARO DE EMERGENCIA: apaga ambos relés al instante |
-| 4 | **Sensor de corriente tipo ACS712** | Mide la corriente del actuador; a 3 A (≈ 700 N) se detiene la compactación |
+| 4 | **Sensor de corriente tipo ACS712** | Mide la corriente del actuador; al llegar a 2,9 A la placa retrocede de inmediato |
 | 5 | **Módulo relé 1** (Songle SRD-05VDC-SL-C) | AVANCE: la placa baja |
 | 6 | **Módulo relé 2** (Songle SRD-05VDC-SL-C) | RETORNO: la placa sube. Junto con el relé 1 forma un puente H que invierte el sentido del motor |
 | 7 | **Fuente 12 V DC, 200 W (16,7 A)** | Potencia del actuador, separada del control |
@@ -43,7 +43,7 @@ Las instrucciones y conexiones de la v1 están en `iteraciones/iteracion_1/`.
 
 El material de la estructura limitó el proyecto. Sobre **3 A** de corriente, la fuerza del actuador (**≈ 700 N**) superaba lo que soportaba el mueble de madera y este tendía a romperse. Por eso:
 
-- El programa **corta a 3 A** (`CORRIENTE_LIMITE_A` en `compactador_v3.ino`).
+- El programa tiene un **umbral de 2900 mA (2,9 A ≈ 665 N)** (`UMBRAL_CORRIENTE_MA` en `compactador_v3.ino`): al alcanzarlo, la placa retrocede de inmediato, sin llegar a los 3 A.
 - Se compactan **como máximo 5 latas, siempre paradas**. Con más latas la corriente superaba los 3 A.
 - **No se pueden usar latas acostadas:** acostadas se vuelven más duras de aplastar y superan la resistencia del prototipo.
 - Se reforzaron **el techo y el piso con escuadras de acero**.
@@ -59,8 +59,8 @@ El actuador (1500 N) y la fuente (16,7 A) tienen capacidad de sobra: el límite 
 | Alimentación de control | 5 V por USB (cargador) |
 | Alimentación de potencia | 12 V DC, fuente LED de 200 W (16,7 A máx.), entrada 220 V AC |
 | Actuador | 12 V DC, carrera 300 mm, 1500 N máx., 6 mm/s, ciclo de trabajo 10 %, fines de carrera internos |
-| Corriente de trabajo | ≈ 1 A en vacío; **3 A máximo** permitido por el programa |
-| Fuerza de compactación | ≈ 700 N máximo (estimada; ver pruebas de carga) |
+| Corriente de trabajo | ≈ 1 A en vacío; **2,9 A máximo** (umbral del programa; daño desde 3 A) |
+| Fuerza de compactación | ≈ 665 N máximo (estimada; ver pruebas de carga) |
 | Capacidad por ciclo | Máximo 5 latas paradas |
 | Duración de un ciclo | ≈ 1 a 1,7 min (bajar y subir 300 mm a 6 mm/s) |
 | Dimensiones del mueble | 380 × 370 × 850 mm |
@@ -93,5 +93,5 @@ El actuador (1500 N) y la fuente (16,7 A) tienen capacidad de sobra: el límite 
 | El actuador no se mueve en un sentido | Ya está en su extremo de recorrido | Es normal: el fin de carrera interno lo detiene |
 | La placa se detiene apenas parte | Lectura del sensor mal calibrada | Ver `software/docs/README.md` |
 | La placa nunca se detiene por límite | El sensor no está en serie con la línea de 12 V | Revisar que V− pase por los bornes IP+ / IP− del sensor |
-| La madera cruje o se deforma | Demasiadas latas, latas acostadas o límite de corriente aumentado | Máximo 5 latas paradas; no subir `CORRIENTE_LIMITE_A`; revisar escuadras |
+| La madera cruje o se deforma | Demasiadas latas, latas acostadas o límite de corriente aumentado | Máximo 5 latas paradas; no subir `UMBRAL_CORRIENTE_MA`; revisar escuadras |
 | El multímetro marca 12 V solo por un instante | Las puntas apenas rozan el cobre | Medir apoyando la punta en la cabeza del tornillo |

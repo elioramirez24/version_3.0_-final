@@ -17,28 +17,31 @@ g++ -std=c++17 -o pruebas pruebas_ciclo.cpp && ./pruebas
 
 | Prueba | Situación simulada | Resultado esperado |
 |---|---|---|
-| A | 5 latas paradas: la placa las toca a 180 mm y la corriente sube 0,1 A por mm | Se detiene al llegar a 3 A, sube y queda en reposo |
+| A | 5 latas paradas: la placa las toca a 180 mm y la corriente sube 0,1 A por mm | Corta al llegar a 2900 mA, la corriente real nunca alcanza 3 A y el retroceso empieza a los ≈ 50 ms; sube y queda en reposo |
 | B | Cámara vacía | Baja 300 mm hasta el fin de carrera interno (la corriente cae a 0), sube y queda en reposo |
 | C | Paro de emergencia a los 10 s | Ambos relés se apagan en la misma vuelta del programa; el verde no hace nada mientras el rojo está presionado; luego el verde solo hace subir la placa |
-| D | Pico de arranque de 6 A durante 200 ms | No se confunde con el límite de 3 A |
+| D | Pico de arranque de 6 A durante 200 ms | No se confunde con el umbral de 2900 mA |
 | E | Algo traba la placa al subir | Se detiene por sobrecorriente y queda en emergencia |
 
-En todas las pruebas se verifica además que **los dos relés nunca estén activos a la vez** (eso pondría en cortocircuito la fuente de 12 V a través de los relés).
+En todas las pruebas se verifica además que **los dos relés nunca estén activos a la vez** (el actuador quedaría con sus dos cables en +12 V y no se movería).
 
 ## Resultado (22-11-2026)
 
 ```
-A) 5 latas: se detuvo en x = 201.2 mm (I ~ 3.12 A), volvio arriba. OK
+A) 5 latas: corte en x = 199.332 mm; corriente real maxima = 2.9314 A (< 3 A); retroceso a los 51 ms del corte. OK
    [   0.13s] >> AVANCE: la placa baja a compactar
-   [  33.66s] >> Limite de 3 A (~700 N): fin de la compactacion
-   [  33.96s] >> RETORNO: la placa sube
-   [  68.30s] >> Fin de carrera superior: listo para otro ciclo
+   [  33.35s] >> Umbral de 2900 mA: retroceso inmediato
+   [  33.40s] >> RETORNO: la placa sube
+   [  67.43s] Corriente maxima del ciclo: 2933 mA
+   [  67.43s] >> Fin de carrera superior: listo para otro ciclo
 B) sin latas: fin de carrera inferior -> retorno -> reposo. OK
-C) paro de emergencia en x = 61.3 mm: reles apagados en el mismo ciclo; retorno con verde. OK
+C) paro de emergencia en x = 61.344 mm: reles apagados en el mismo ciclo; retorno con verde. OK
 D) pico de arranque ignorado. OK
-E) sobrecorriente al subir -> detenido en x = 100.5 mm. OK
+E) sobrecorriente al subir -> detenido en x = 100.488 mm. OK
 
 Todas las pruebas pasaron. Ambos reles activos a la vez: 0 veces.
 ```
+
+En la prueba A el corte ocurre a 2,93 A reales y no exactamente a 2,90 A: el Arduino mide en escalones de unos 49 mA con el ACS712-20A (ver `software/src/README.md`). Aun así, la corriente nunca llega a 3 A.
 
 **Límite de estas pruebas:** el modelo del actuador es una simplificación (velocidad constante de 6 mm/s y corriente que sube en forma lineal al comprimir). Confirman la lógica del programa, no reemplazan la prueba en el prototipo real.

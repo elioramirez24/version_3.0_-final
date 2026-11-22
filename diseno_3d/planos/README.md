@@ -54,4 +54,4 @@
 
 - **Límite de carga.** En las pruebas, la estructura de madera cedió sobre ≈ 700 N (3 A). El programa limita la fuerza y se compactan como máximo **5 latas paradas** por ciclo; las latas acostadas no se pueden usar (ver `testing/reportes/pruebas_carga_v3.md`).
 - **Refuerzos no dibujados.** Después de las pruebas se agregaron **escuadras de acero** en el techo y en el piso del mueble (fotos `hardware/fotos/v3_08_*` y `v3_09_*`). Una revisión de los planos debería incluirlas.
-- **Fin de la compactación.** En el programa v3, la placa también se detiene antes del fondo cuando la corriente llega a 3 A.
+- **Fin de la compactación.** En el programa v3, la placa también se detiene antes del fondo cuando la corriente llega al umbral de 2900 mA (2,9 A), y retrocede de inmediato.

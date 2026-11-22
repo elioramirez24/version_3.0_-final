@@ -20,7 +20,7 @@
 - **Problema a resolver:** desaprovechamiento de la capacidad de los contenedores de reciclaje debido al gran volumen que ocupan los residuos depositados sin compactar (latas, botellas PET y cartón). Caso de estudio del informe: Punto Verde Líder Quilín (Peñalolén). Usuarios del piloto según la presentación: comunidad de la UAI, escalable a puntos de reciclaje comunes.
 
 ### Descripción del Proyecto
-Contenedor de reciclaje con compactación automática de latas. El usuario deja las latas **paradas** en la cámara, cierra la puerta de carga y presiona el **pulsador verde**. Un **actuador lineal de 12 V**, controlado por un **Arduino UNO** mediante dos relés, baja una placa de madera que aplasta las latas. Un **sensor de corriente** mide el esfuerzo del motor: cuando llega a **3 A (≈ 700 N)** la placa se detiene y vuelve a subir sola. El **pulsador rojo** es un paro de emergencia que funciona en cualquier momento.
+Contenedor de reciclaje con compactación automática de latas. El usuario deja las latas **paradas** en la cámara, cierra la puerta de carga y presiona el **pulsador verde**. Un **actuador lineal de 12 V**, controlado por un **Arduino UNO** mediante dos relés, baja una placa de madera que aplasta las latas. Un **sensor de corriente** mide el esfuerzo del motor: cuando llega al umbral de **2900 mA (2,9 A ≈ 665 N)** la placa retrocede de inmediato y vuelve a subir sola, sin llegar nunca a 3 A. El **pulsador rojo** es un paro de emergencia que funciona en cualquier momento.
 
 Compactar cada lata reduce el volumen que ocupa: una lata llevada a cerca del 30 % de su altura permite guardar unas **tres veces más latas** en el mismo espacio. El proyecto mejora un precedente del ramo Taller de Introducción a la Ingeniería (2.° semestre 2025), que usaba un compactador manual.
 
@@ -44,7 +44,7 @@ El proyecto tuvo una limitación importante causada por el **material de la estr
 - Cuando la corriente del actuador **superaba los 3 A**, la fuerza también superaba lo que soportaba la estructura y **esta tendía a romperse**. Con 3 A el actuador ejerce aproximadamente **700 N** (F ≈ 350 N/A · (I − 1 A); el equivalente al peso de unos 71 kg), menos de la mitad de los 1500 N que puede dar.
 - Por eso el proyecto se limitó a **un máximo de 5 latas paradas** por ciclo: con más latas, la corriente pasaba los 3 A.
 - En esta versión **no es posible usar latas acostadas**: acostadas se vuelven más duras y superan la resistencia del prototipo.
-- Hubo que **reforzar el techo y el piso con escuadras de acero**, y el programa **corta la compactación a 3 A**.
+- Hubo que **reforzar el techo y el piso con escuadras de acero**, y el programa tiene un **umbral de 2900 mA (2,9 A)**: al alcanzarlo, la placa retrocede de inmediato. Así queda un margen de 0,1 A antes de los 3 A en que la máquina se daña.
 
 Cálculo de la fuerza, explicación física y recomendaciones: [`testing/reportes/pruebas_carga_v3.md`](testing/reportes/pruebas_carga_v3.md).
 

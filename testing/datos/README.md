@@ -5,7 +5,7 @@
 | Archivo | Contenido |
 |---|---|
 | `estimacion_fuerza_corriente.csv` | Fuerza estimada del actuador según la corriente, con el modelo F ≈ 350 N/A · (I − 1 A). Incluye la masa equivalente y la situación de cada valor (permitido, límite, no permitido) |
-| `grafico_fuerza_corriente.png` | Gráfico del modelo, con el límite de 3 A y la zona donde la estructura de madera cede |
+| `grafico_fuerza_corriente.png` | Gráfico del modelo, con el umbral del programa (2,9 A), el punto de daño (3 A) y la zona donde la estructura de madera cede |
 
 El cálculo y sus supuestos están en `testing/reportes/pruebas_carga_v3.md`.
 
@@ -13,7 +13,7 @@ El cálculo y sus supuestos están en `testing/reportes/pruebas_carga_v3.md`.
 
 ```csv
 corriente_A,fuerza_estimada_N,masa_equivalente_kg,observacion
-3.0,700,71,LÍMITE DEL PROGRAMA: máximo que soporta la estructura de madera (estimación del equipo ≈ 700 N)
+2.9,665,68,UMBRAL DEL PROGRAMA (2900 mA): la placa retrocede de inmediato
 ```
 
 - Separador: coma. Decimales con punto.
