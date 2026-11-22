@@ -39,7 +39,7 @@ stateDiagram-v2
     REPOSO --> AVANCE: pulsador verde
     AVANCE --> INVERSION: corriente ≥ 2900 mA (retroceso inmediato)
     AVANCE --> INVERSION: corriente ≈ 0 (fin de carrera inferior)
-    AVANCE --> INVERSION: 60 s sin terminar
+    AVANCE --> INVERSION: 29 s de bajada (tiempo máximo)
     INVERSION --> RETORNO: 50 ms con ambos relés apagados
     RETORNO --> REPOSO: corriente ≈ 0 (fin de carrera superior) o 60 s
     RETORNO --> EMERGENCIA: corriente ≥ 2900 mA (algo traba la subida)
@@ -52,7 +52,7 @@ stateDiagram-v2
 | Estado | Relé 1 | Relé 2 | Actuador | Sale del estado cuando… |
 |---|---|---|---|---|
 | REPOSO | Apagado | Apagado | Detenido arriba | Se presiona el verde |
-| AVANCE | Encendido | Apagado | Baja y compacta | La corriente llega a **2900 mA**, cae casi a 0 o pasan 60 s |
+| AVANCE | Encendido | Apagado | Baja y compacta | La corriente llega a **2900 mA**, cae casi a 0 o pasan **29 s** |
 | INVERSION | Apagado | Apagado | Detenido | Pasan 50 ms (lo justo para que un relé se suelte antes de que cierre el otro) |
 | RETORNO | Apagado | Encendido | Sube | La corriente cae casi a 0 (llegó arriba) o pasan 60 s |
 | EMERGENCIA | Apagado | Apagado | Detenido | Se suelta el rojo y se presiona el verde: la placa solo sube |
@@ -84,7 +84,8 @@ stateDiagram-v2
 | `SENSIBILIDAD_V_POR_A` | 0,100 | Sensibilidad del ACS712: 0,185 (versión 5 A), 0,100 (20 A) o 0,066 (30 A). **Verificar la versión del módulo** |
 | `UMBRAL_CORRIENTE_MA` | 2900 | Umbral en miliamperes (2,9 A ≈ 665 N): al llegar, retroceso inmediato. **No subirlo:** desde 3000 mA la estructura se daña |
 | `CORRIENTE_FIN_CARRERA_MA` | 300 | Bajo este valor (mA) se considera que el motor se detuvo en un extremo |
-| `T_AVANCE_MAX_MS` / `T_RETORNO_MAX_MS` | 60 000 | Tiempo máximo de cada movimiento (300 mm a 6 mm/s = 50 s) |
+| `T_AVANCE_MAX_MS` | 29 000 | Tiempo máximo de bajada: **29 s** (valor usado en el prototipo). Si se cumple sin llegar a 2900 mA, la placa retrocede igual |
+| `T_RETORNO_MAX_MS` | 60 000 | Tiempo máximo de subida (respaldo; normalmente se detiene antes, al llegar arriba) |
 | `T_IGNORAR_ARRANQUE_MS` | 400 | Tiempo en que se ignora el pico de arranque |
 | `T_INVERSION_MS` | 50 | Pausa entre apagar el avance y encender el retroceso |
 

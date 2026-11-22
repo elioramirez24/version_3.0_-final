@@ -81,8 +81,8 @@ void imprimirEventos() {
 }
 
 int main() {
-  // ---- A: 5 latas paradas; la placa las toca a 180 mm y la corriente sube 0,1 A por mm
-  reiniciar(180);
+  // ---- A: 5 latas paradas; la placa las toca a 120 mm y la corriente sube 0,1 A por mm
+  reiniciar(120);
   pulsar(sim::botonVerde);
   assert(estado == AVANCE);
   double maxReal = 0;                 // corriente real máxima con el relé de avance activo
@@ -114,18 +114,20 @@ int main() {
             << " A (< 3 A); retroceso a los " << msHastaRetroceso << " ms del corte. OK\n";
   imprimirEventos();
 
-  // ---- B: sin latas: llega al fin de carrera inferior (300 mm) y vuelve
+  // ---- B: sin latas: a los 29 s se cumple el tiempo máximo de bajada y la placa vuelve
   reiniciar(1e9);
   pulsar(sim::botonVerde);
   for (int i = 0; i < 30000 && estado == AVANCE; i++) { loop(); sim::t += 3; M.paso(0.003); }
-  assert(estado == INVERSION && M.x > 299);
+  assert(estado == INVERSION);
+  assert(sim::log.back().find("Tiempo maximo de avance") != std::string::npos);
+  double xTiempo = M.x;
   correr(60); assert(estado == REPOSO && M.x == 0);
   assert(sim::ambosActivos == 0);
-  std::cout << "B) sin latas: fin de carrera inferior -> retorno -> reposo. OK\n";
+  std::cout << "B) sin latas: a los 29 s se detiene por tiempo (x = " << xTiempo << " mm) -> retorno -> reposo. OK\n";
   imprimirEventos();
 
   // ---- C: paro de emergencia a los 10 s
-  reiniciar(180);
+  reiniciar(120);
   pulsar(sim::botonVerde);
   correr(10);
   sim::botonRojo = true; loop();

@@ -25,7 +25,7 @@
 3. Desconectar el cargador USB.
 
 ### Cuidados de uso
-- **Ciclo de trabajo del actuador: 10 %.** Por cada minuto de movimiento, dejar unos 9 minutos de descanso. Un ciclo completo dura cerca de 1 a 1,7 minutos.
+- **Ciclo de trabajo del actuador: 10 %.** Por cada minuto de movimiento, dejar unos 9 minutos de descanso. Un ciclo completo dura como máximo cerca de 1 minuto (hasta 29 s de bajada y lo mismo de subida).
 - No aumentar el umbral de 2900 mA del programa: la estructura de madera se daña desde 3 A (≈ 700 N).
 
 ---
@@ -74,7 +74,8 @@ if (corrienteMA >= UMBRAL_CORRIENTE_MA) {
 | `>> Fin de carrera superior: listo para otro ciclo` | Ciclo terminado |
 | `>> PARO DE EMERGENCIA: reles apagados` | Se presionó el rojo |
 | `>> Sobrecorriente al subir: revisar la placa` | Algo traba la subida; el sistema queda detenido |
-| `>> Tiempo maximo de avance` / `de retorno` | El movimiento duró más de 60 s: revisar el sensor de corriente |
+| `>> Tiempo maximo de avance` | Pasaron 29 s bajando sin llegar a 2900 mA: la placa retrocede igual. Si pasa siempre y las latas quedan sin compactar, la placa no alcanza a llegar a ellas en 29 s |
+| `>> Tiempo maximo de retorno` | La subida duró más de 60 s: revisar el sensor de corriente |
 | `AVANCE  I = 1200 mA  F~ 70 N` | Registro periódico: estado, corriente y fuerza estimada |
 
 ---

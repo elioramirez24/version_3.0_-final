@@ -11,7 +11,7 @@
  *      detiene y RETROCEDE DE INMEDIATO. Nunca debe llegar a 3 A: desde ahí la fuerza
  *      supera lo que resiste la estructura de madera y la máquina se daña.
  *      El avance también termina si la corriente cae casi a 0 (fin de carrera interno
- *      del actuador) o si se cumple el tiempo máximo de seguridad.
+ *      del actuador) o si se cumplen 29 segundos de bajada (tiempo máximo de avance).
  *   4. RETORNO: activa el relé 2 y la placa sube hasta su fin de carrera superior.
  *   5. El pulsador rojo (PARO DE EMERGENCIA) apaga ambos relés en cualquier momento.
  *      Después de un paro, el pulsador verde solo hace SUBIR la placa (retorno seguro).
@@ -63,8 +63,8 @@ const long CORRIENTE_FIN_CARRERA_MA = 300;          // bajo esto el motor está 
 const unsigned long T_IGNORAR_ARRANQUE_MS = 400;    // pico de arranque del motor (placa arriba, sin carga)
 const unsigned long T_CONFIRMAR_FIN_MS    = 800;    // la corriente baja debe mantenerse este tiempo
 const unsigned long T_INVERSION_MS        = 50;     // mínimo con ambos relés apagados antes de retroceder
-const unsigned long T_AVANCE_MAX_MS       = 60000;  // 300 mm a 6 mm/s = 50 s, más margen
-const unsigned long T_RETORNO_MAX_MS      = 60000;
+const unsigned long T_AVANCE_MAX_MS       = 29000;  // 29 s: tiempo máximo de bajada (valor usado en el prototipo)
+const unsigned long T_RETORNO_MAX_MS      = 60000;  // la subida se corta antes, al llegar arriba
 const unsigned long T_ANTIRREBOTE_MS      = 30;
 
 // ----------------------------------------------------------------- Estados

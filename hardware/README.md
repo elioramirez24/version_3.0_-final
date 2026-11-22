@@ -62,7 +62,7 @@ El actuador (1500 N) y la fuente (16,7 A) tienen capacidad de sobra: el límite 
 | Corriente de trabajo | ≈ 1 A en vacío; **2,9 A máximo** (umbral del programa; daño desde 3 A) |
 | Fuerza de compactación | ≈ 665 N máximo (estimada; ver pruebas de carga) |
 | Capacidad por ciclo | Máximo 5 latas paradas |
-| Duración de un ciclo | ≈ 1 a 1,7 min (bajar y subir 300 mm a 6 mm/s) |
+| Duración de un ciclo | ≈ 1 min como máximo: hasta 29 s de bajada y lo mismo de subida |
 | Dimensiones del mueble | 380 × 370 × 850 mm |
 | Material | Madera pintada, acrílico de 3 mm, tubos guía Ø32, escuadras de acero |
 
