@@ -12,11 +12,11 @@
 ## Descripción
 
 ### Definición del problema
-En la actividad de ideación (`documentacion/avances/00_Actividad_taller_ideacion.pdf`) se evaluaron dos problemáticas:
+En la actividad de ideación (`documentacion/avances/00_Actividad_taller_ideacion.pdf`, disponible en el historial de git, commit `cc6a7ca`) se evaluaron dos problemáticas:
 1. **Desperdicio masivo de comida** — solución: app de donación de excedentes o Arduino con sensor de temperatura y humedad que active un ventilador.
 2. **Desborde de basura en las ciudades** — solución: basureros que compacten la basura o el reciclaje. ✅ **Elegida**
 
-En el Avance N°1 (`documentacion/avances/01_Avance_Num_1.pdf`) el problema se acotó a: *el desaprovechamiento de la capacidad de los contenedores de reciclaje debido al volumen de residuos no compactados*, vinculado al **ODS 12**, con caso de estudio en el Punto Verde Líder Quilín (Peñalolén).
+En el Avance N°1 (`documentacion/avances/01_Avance_Num_1.pdf`, en el mismo commit) el problema se acotó a: *el desaprovechamiento de la capacidad de los contenedores de reciclaje debido al volumen de residuos no compactados*, vinculado al **ODS 12**, con caso de estudio en el Punto Verde Líder Quilín (Peñalolén).
 
 ### Objetivo de esta iteración
 - Validar que un Arduino pueda controlar el sentido de un actuador lineal de 12 V con dos botones.
@@ -37,7 +37,7 @@ En el Avance N°1 (`documentacion/avances/01_Avance_Num_1.pdf`) el problema se a
 ### Software
 - IDE: Arduino IDE 2.x
 - Librerías: ninguna externa
-- Versión código: v1.0 (`software/src/main/main.ino`)
+- Versión código: v1.0 (`iteraciones/iteracion_1/codigo/main/main.ino`)
 
 ---
 
@@ -138,11 +138,25 @@ Video del diagnóstico del transformador: `testing/evidencias/videos/prueba_tran
 - [ ] Diseñar la caja de protección de la electrónica
 - [ ] Mejorar el ruteo de cables
 
+### Seguimiento del plan (revisado al cerrar la v3.0)
+
+| Mejora planificada | Resultado |
+|---|---|
+| Medir el consumo al compactar | ✅ Se agregó un sensor de corriente; el programa limita a 3 A (≈ 700 N) |
+| Fuente de ≥ 5 A | ✅ Fuente de 12 V y 200 W (16,7 A) |
+| Modo de un solo toque | ✅ Ciclo automático con el pulsador verde y paro de emergencia con el rojo |
+| Sensor de presencia de lata | ⚠️ Simulado en Wokwi (HC-SR04); no se montó en el prototipo final |
+| Caja de protección de la electrónica | ⚠️ La electrónica quedó sobre una repisa separada de la cámara, sin caja cerrada |
+| Resistencias en los botones, placa perforada, reductor 12 V → 5 V, interruptor general | ❌ No realizado; se mantiene como recomendación |
+
 ---
 
 ## Archivos en esta Carpeta
 
 - `v1_fotos/` - Fotografías del prototipo
-- Código de esta versión: `software/src/main/main.ino`
-- Conexiones: `hardware/esquemas/README.md`
-- Modelo 3D: `diseno_3d/fusion360/compactador_v1.f3z`
+- Código de esta versión: `codigo/main/main.ino`
+- Conexiones de la v1: `conexiones_v1.md`
+- Instrucciones de ensamble de la v1: `instrucciones_ensamble_v1.md`
+- Modelo 3D: `diseno_3d/compactador_v1.f3z` (propiedades en `diseno_3d/fusion360/README.md`)
+- Programa de diagnóstico: `software/src/diagnostico/diagnostico.ino` (en la v3 se le agregó la lectura del sensor de corriente)
+- Etiqueta de git: `v1.0` (estado completo del repositorio al cerrar esta iteración)

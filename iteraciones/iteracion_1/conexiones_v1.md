@@ -1,4 +1,6 @@
-# Esquemas de Circuito
+# Conexiones del circuito v1.0
+
+> **Documento histórico de la iteración 1** (control manual en protoboard). El circuito vigente (v3.0) está en `hardware/esquemas/README.md`.
 
 ## Archivos Requeridos
 

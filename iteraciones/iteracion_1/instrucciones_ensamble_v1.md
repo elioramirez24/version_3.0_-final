@@ -1,5 +1,7 @@
 # Instrucciones de ensamble - Sistema de control del actuador (v1.0)
 
+> **Documento histórico de la iteración 1.** Las instrucciones vigentes (v3.0) están en `hardware/instrucciones_ensamble.md`.
+
 Versión corregida de las instrucciones usadas en la iteración 1. Incorpora todas las correcciones encontradas durante las pruebas (ver `iteraciones/iteracion_1/README.md`).
 
 **Resultado esperado:** mientras se mantiene presionado el botón SALIR, el actuador se extiende; mientras se mantiene presionado el botón ENTRAR, se retrae; al soltar, se detiene.
@@ -87,7 +89,7 @@ Cada relé tiene tres tornillos. Leer las letras impresas junto a ellos: **NO**,
 
 ## Paso 7: Cargar el código
 1. Conectar el Arduino al computador por USB.
-2. Abrir Arduino IDE, borrar el contenido y pegar completo `software/src/main/main.ino`.
+2. Abrir Arduino IDE, borrar el contenido y pegar completo `iteraciones/iteracion_1/codigo/main/main.ino`.
 3. Confirmar que el código termine con dos llaves de cierre `}`.
 4. Seleccionar **Arduino UNO** y el puerto. Presionar ✓ (Verificar) y luego → (Subir).
 
@@ -97,7 +99,7 @@ Con el transformador **desenchufado**:
 - **Botón SALIR:** "clic" y luz verde en el relé 1 mientras se mantiene presionado.
 - **Botón ENTRAR:** "clic" y luz verde en el relé 2 mientras se mantiene presionado.
 
-Si algo no responde, subir `software/src/diagnostico/diagnostico.ino` y seguir la tabla de fallas de `hardware/README.md`.
+Si algo no responde, subir `software/src/diagnostico/diagnostico.ino` y seguir la tabla de fallas de `hardware/README.md` (los pines 3, 4, 5 y 6 no cambiaron en la v3).
 
 ## Paso 9: Prueba con 12 V
 1. Dejar espacio libre para que el actuador se extienda (hasta 30 cm) y alejar las manos del vástago.
