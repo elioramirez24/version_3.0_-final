@@ -1,88 +1,119 @@
 # Recypress — Compactador automático de latas para puntos de reciclaje
 
+![Prototipo final](hardware/fotos/v3_02_vista_frontal_abierto.jpg)
+
 ### Información del Equipo
 - **Integrantes:**
-  - Santiago Harb - [prototipado y codigo]
-  - Claudio Lagos - [diseño real ]
-  - Sebastián Miranda - [diseño real]
-  - Elio Ramírez - [prototipado y codigo]
-  - Agustín Riquelme - [diseño real]
-- **Curso:** Taller de Diseño (TEI201), Sección IV
+  - Santiago Harb - Prototipado y código
+  - Claudio Lagos - Diseño real
+  - Sebastián Miranda - Diseño real
+  - Elio Ramírez - Prototipado y código
+  - Agustín Riquelme - Diseño real
+- **Curso:** Taller de Diseño (TEI201), Sección IV — Universidad Adolfo Ibáñez
 - **Profesor:** Benjamín Gutiérrez
 
-- **ODS Seleccionado:** ODS 12 - Producción y consumo responsables
-- **Problema a resolver:** Desaprovechamiento de la capacidad de los contenedores de reciclaje debido al gran volumen que ocupan los residuos depositados sin compactar (latas, botellas PET y cartón). Caso de estudio del informe: Punto Verde Líder Quilín (Peñalolén). Usuarios del piloto según la presentación: comunidad de la UAI, escalable a puntos de reciclaje comunes.
-- **Materiales de construcción:** MDF (Trupán), listones de madera y lámina de metal para la placa compactadora.
+- **ODS seleccionado:** ODS 12 - Producción y consumo responsables
+- **Problema a resolver:** desaprovechamiento de la capacidad de los contenedores de reciclaje debido al gran volumen que ocupan los residuos depositados sin compactar (latas, botellas PET y cartón). Caso de estudio del informe: Punto Verde Líder Quilín (Peñalolén). Usuarios del piloto según la presentación: comunidad de la UAI, escalable a puntos de reciclaje comunes.
 
 ### Descripción del Proyecto
-Basurero de reciclaje que incorpora un sistema de compactación mecánica automática. Un actuador lineal de 12 V, controlado por un Arduino UNO mediante dos relés, empuja una placa compresora que aplasta las latas dentro del contenedor. Así se reduce el volumen de cada residuo en el mismo momento en que el usuario lo deposita.
+Contenedor de reciclaje con compactación automática de latas. El usuario deja las latas **paradas** en la cámara, cierra la puerta de carga y presiona el **pulsador verde**. Un **actuador lineal de 12 V**, controlado por un **Arduino UNO** mediante dos relés, baja una placa de madera que aplasta las latas. Un **sensor de corriente** mide el esfuerzo del motor: cuando llega a **3 A (≈ 700 N)** la placa se detiene y vuelve a subir sola. El **pulsador rojo** es un paro de emergencia que funciona en cualquier momento.
 
- una lata compactada hasta cerca del 30 % de su altura permite almacenar aproximadamente **tres veces más latas** en el mismo espacio (de 20 a 60 latas en una caja de 10,6 L).
-
-El proyecto mejora un precedente del ramo Taller de Introducción a la Ingeniería (2.° semestre 2025), que usaba un compactador manual: requería esfuerzo físico, aplicaba una fuerza irregular y podía dañarse.
+Compactar cada lata reduce el volumen que ocupa: una lata llevada a cerca del 30 % de su altura permite guardar unas **tres veces más latas** en el mismo espacio. El proyecto mejora un precedente del ramo Taller de Introducción a la Ingeniería (2.° semestre 2025), que usaba un compactador manual.
 
 ### Estado del Proyecto
-- **Versión actual:** v1.0
-- **Última actualización:** 25 de octubre de 2026
-- **Estado:** Iteración 1 completada - El actuador sale y entra con los botones en banco de pruebas (Arduino UNO + 2 relés + fuente de 12 V).
+- **Versión actual:** v3.0 (prototipo final)
+- **Última actualización:** 22 de noviembre de 2026
+- **Estado:** prototipo construido y funcionando con ciclo automático, límite de fuerza y paro de emergencia. Capacidad limitada a 5 latas paradas por la resistencia de la estructura de madera (ver abajo). Testing con usuarios pendiente.
+
+| Iteración | Qué se logró | Detalle |
+|---|---|---|
+| v1.0 | Control manual del actuador con 2 relés en banco de pruebas | `iteraciones/iteracion_1/` · etiqueta git `v1.0` |
+| v2.0 | Ciclo automático simulado en Wokwi y diseño en madera | `iteraciones/iteracion_2/` |
+| v3.0 | Prototipo construido, sensor de corriente, refuerzos de acero | `iteraciones/iteracion_3/` · etiqueta git `v3.0` |
 
 ---
 
-##  Estructura del Repositorio
+## ⚠️ Limitación: estructura de madera
+
+El proyecto tuvo una limitación importante causada por el **material de la estructura, que es de madera**. Los problemas fueron sobre todo de hardware: el material resistía poco.
+
+- Cuando la corriente del actuador **superaba los 3 A**, la fuerza también superaba lo que soportaba la estructura y **esta tendía a romperse**. Con 3 A el actuador ejerce aproximadamente **700 N** (F ≈ 350 N/A · (I − 1 A); el equivalente al peso de unos 71 kg), menos de la mitad de los 1500 N que puede dar.
+- Por eso el proyecto se limitó a **un máximo de 5 latas paradas** por ciclo: con más latas, la corriente pasaba los 3 A.
+- En esta versión **no es posible usar latas acostadas**: acostadas se vuelven más duras y superan la resistencia del prototipo.
+- Hubo que **reforzar el techo y el piso con escuadras de acero**, y el programa **corta la compactación a 3 A**.
+
+Cálculo de la fuerza, explicación física y recomendaciones: [`testing/reportes/pruebas_carga_v3.md`](testing/reportes/pruebas_carga_v3.md).
+
+---
+
+## Circuito real
+
+![Circuito real del prototipo v3](hardware/esquemas/circuito_real_v3.png)
+
+Conexiones completas y simulación en Wokwi: [`hardware/esquemas/`](hardware/esquemas/README.md).
+
+---
+
+## Estructura del Repositorio
 ```
-├── hardware/          # Circuitos, esquemas y BOM
-├── software/          # Código Arduino y librerías
-├── diseno_3d/        # Modelos Fusion 360 y renders
-├── testing/          # Validación con usuarios
-├── documentacion/    # Avances, reporte y presentación
-└── iteraciones/      # Historial de versiones
+├── hardware/          # Circuito real, simulación, conexiones, BOM, fotos e instrucciones de ensamble
+├── software/          # Programa v3, diagnóstico, pruebas en PC y manual de operación
+├── diseno_3d/         # Planos v3 (PDF + imágenes) y modelo Fusion 360 de la v1
+├── testing/           # Pruebas de carga, estimación de fuerza y evidencias
+├── documentacion/     # Reporte final y presentación
+└── iteraciones/       # Historial v1 → v2 → v3 (con fotos, código y conexiones de la v1)
 ```
 
 ---
 
-##  Inicio Rápido
+## Inicio Rápido
 
-### Requisitos Previos
+### Requisitos previos
 - Arduino IDE 2.x
-- Fusion 360
-- Arduino UNO, 2 módulos de relé de 5 V, actuador lineal de 12 V y fuente de 12 V DC
+- Arduino UNO, 2 módulos de relé de 5 V, sensor de corriente tipo ACS712, actuador lineal de 12 V, fuente de 12 V (200 W) y cargador USB de 5 V
+- Mueble según `diseno_3d/planos/planos_v3.pdf`, con las escuadras de acero en el techo y el piso
 
 ### Instalación
 1. Clonar el repositorio.
 2. No se requieren librerías externas.
-3. Abrir `software/src/main/main.ino` en Arduino IDE, seleccionar **Arduino UNO** y el puerto correspondiente, y subir el código.
-4. Armar el circuito siguiendo `hardware/instrucciones_ensamble.md` y hacer la prueba en seco (sin 12 V) antes de conectar la fuente.
+3. Armar el circuito siguiendo [`hardware/instrucciones_ensamble.md`](hardware/instrucciones_ensamble.md) y hacer la prueba en seco con `software/src/diagnostico/diagnostico.ino`.
+4. Abrir `software/src/compactador_v3/compactador_v3.ino`, ajustar `SENSIBILIDAD_V_POR_A` a la versión del sensor, seleccionar **Arduino UNO** y subir el código.
+5. Operar según [`software/docs/README.md`](software/docs/README.md): **máximo 5 latas paradas**, pulsador verde para compactar, rojo para detener.
 
 ---
 
-##  Checklist de Entrega
+## Checklist de Entrega
 
 ### Hardware ✓
-- [ ] Esquema del circuito (Fritzing/Wokwi) — *tabla de conexiones documentada; falta el diagrama*
-- [ ] BOM completo — *componentes listados; faltan precios y proveedores*
-- [x] Fotos del prototipo v1 (`iteraciones/iteracion_1/v1_fotos/`)
+- [x] Esquema del circuito real con el actuador (`hardware/esquemas/circuito_real_v3.png`) y simulación en Wokwi
+- [x] Tabla de conexiones completa (`hardware/esquemas/README.md`)
+- [ ] BOM completo — *componentes y piezas listados; faltan precios y proveedores*
+- [x] Fotos del prototipo final (`hardware/fotos/`) y de las versiones anteriores
 
 ### Software ✓
-- [x] Código comentado
+- [x] Código comentado (`software/src/compactador_v3/compactador_v3.ino`)
 - [x] Librerías documentadas (no usa librerías externas)
-- [x] Manual de instalación
+- [x] Manual de instalación y de operación
+- [x] Pruebas de la lógica en PC (`software/pruebas_pc/`)
 
 ### Diseño 3D ✓
-- [ ] Archivos Fusion 360 con TODOS los componentes — *estructura mecánica modelada y medida (135,4 kg); falta la electrónica*
-- [ ] Renders de alta calidad (1+ ángulos)
-- [ ] Planos técnicos
+- [x] Planos técnicos (`diseno_3d/planos/planos_v3.pdf`: ensamble, despiece, isométrica y lista de piezas)
+- [x] Modelo Fusion 360 de la v1 (`diseno_3d/compactador_v1.f3z`)
+- [ ] Modelo 3D de la v3 con la electrónica y las escuadras de acero
+- [ ] Renders de alta calidad
 
 ### Testing ✓
+- [x] Pruebas de carga y limitaciones (`testing/reportes/pruebas_carga_v3.md`)
+- [x] Estimación cuantitativa de fuerza según corriente (`testing/datos/`)
 - [ ] Reporte de testing con usuarios (mín. 5)
-- [ ] Evidencias fotográficas/videos
-- [ ] Datos cuantitativos
+- [ ] Video del ciclo completo
 
 ### Documentación ✓
-- [x] Avance N°1 (`documentacion/avances/`)
+- [x] Avance N°1 (en el historial de git)
 - [ ] Reporte final (máx. 15 páginas)
 - [ ] Presentación (10 min)
 
 ---
 
-##  Licencia
-Este proyecto es desarrollado como parte del curso TEI201 - Facultad de Ingenieria y Ciencias - Universidad Adolfo Ibañez
+## Licencia
+Este proyecto es desarrollado como parte del curso TEI201 - Facultad de Ingeniería y Ciencias - Universidad Adolfo Ibáñez.
