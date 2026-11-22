@@ -1,107 +1,31 @@
 # Datos de Testing
 
-## Archivos de Datos
+## Archivos
 
-### `datos_cuantitativos.xlsx`
-Hoja de cálculo con todos los datos recolectados durante testing
+| Archivo | Contenido |
+|---|---|
+| `estimacion_fuerza_corriente.csv` | Fuerza estimada del actuador según la corriente, con el modelo F ≈ 350 N/A · (I − 1 A). Incluye la masa equivalente y la situación de cada valor (permitido, límite, no permitido) |
+| `grafico_fuerza_corriente.png` | Gráfico del modelo, con el límite de 3 A y la zona donde la estructura de madera cede |
 
-**Estructura sugerida:**
+El cálculo y sus supuestos están en `testing/reportes/pruebas_carga_v3.md`.
 
-#### Sheet 1: Datos de Usuarios
-| ID Usuario | Edad | Género | Perfil | Fecha Testing |
-|------------|------|--------|--------|---------------|
-| U01 | [edad] | [M/F/Otro] | [descripción] | [fecha] |
+### Formato de `estimacion_fuerza_corriente.csv`
 
-#### Sheet 2: Métricas de Usabilidad
-| ID Usuario | Facilidad Uso (1-5) | Satisfacción (1-5) | Tiempo Tarea (seg) | Errores |
-|------------|---------------------|--------------------|--------------------|---------|
-| U01 | 4 | 5 | 45 | 0 |
-
-#### Sheet 3: Métricas de Impacto ODS
-| ID Usuario | Métrica 1 | Métrica 2 | Métrica 3 | Observaciones |
-|------------|-----------|-----------|-----------|---------------|
-| U01 | [valor] | [valor] | [valor] | [texto] |
-
-#### Sheet 4: Feedback Cualitativo
-| ID Usuario | ¿Qué te gustó? | ¿Qué mejorarías? | Otros comentarios |
-|------------|----------------|------------------|-------------------|
-| U01 | [texto] | [texto] | [texto] |
-
----
-
-### `datos_sensores_testing.csv`
-Datos capturados por el prototipo durante sesiones de testing
-
-**Formato:**
 ```csv
-timestamp, sensor_1, sensor_2, actuador_1, evento
-2024-11-20 10:15:23, 23.5, 65, ON, usuario_inicio
-2024-11-20 10:15:24, 23.6, 65, ON, normal
+corriente_A,fuerza_estimada_N,masa_equivalente_kg,observacion
+3.0,700,71,LÍMITE DEL PROGRAMA: máximo que soporta la estructura de madera (estimación del equipo ≈ 700 N)
 ```
 
----
-
-### `comparativa_versiones.xlsx`
-Comparación de métricas entre iteraciones v1, v2, v3
-
-| Métrica | v1 | v2 | v3 | Mejora (%) |
-|---------|-----|-----|-----|------------|
-| Facilidad de uso | 3.2 | 3.8 | 4.5 | +40.6% |
-| Satisfacción | 3.5 | 4.0 | 4.6 | +31.4% |
-| Errores promedio | 2.3 | 1.2 | 0.4 | -82.6% |
+- Separador: coma. Decimales con punto.
+- `masa_equivalente_kg` = fuerza / 9,81: la masa cuyo peso equivale a esa fuerza.
 
 ---
 
-## Análisis Estadístico
+## Datos pendientes
 
-### Estadísticos Básicos
-Para cada métrica calcular:
-- Media (promedio)
-- Mediana
-- Desviación estándar
-- Mínimo y máximo
-- Percentiles (25%, 50%, 75%)
-
-### Ejemplo de Tabla de Resumen
-```
-Métrica: Facilidad de Uso (1-5)
-N = 5 usuarios
-Media: 4.2
-Mediana: 4.0
-Desv. Est.: 0.8
-Mín: 3, Máx: 5
-```
-
----
-
-## Datos de Impacto ODS
-
-### Baseline vs. Resultado
-
-**Antes de la intervención (baseline):**
-- [Indicador 1]: [Valor inicial]
-- [Indicador 2]: [Valor inicial]
-
-**Después de la intervención:**
-- [Indicador 1]: [Valor medido con prototipo]
-- [Indicador 2]: [Valor medido con prototipo]
-
-**Mejora:**
-- [Indicador 1]: [% de mejora]
-- [Indicador 2]: [% de mejora]
-
----
-
-## Visualización de Datos
-
-Incluir gráficos generados (exportar desde Excel como PNG):
-
-- `grafico_usabilidad.png`
-- `grafico_satisfaccion.png`
-- `grafico_impacto_ods.png`
-- `grafico_comparativa_versiones.png`
-
-**Herramientas recomendadas:**
-- Excel / Google Sheets
-- Python (matplotlib, seaborn)
-- R / RStudio
+| Dato | Cómo obtenerlo |
+|---|---|
+| Corriente real en cada ciclo | Copiar las líneas `I = … A` del Monitor Serie (el programa las imprime cada 250 ms) a un `.csv` con columnas `tiempo_s, estado, corriente_A` |
+| Cantidad de latas vs. corriente máxima | Registrar la corriente máxima de ciclos con 1, 2, 3, 4 y 5 latas paradas |
+| Altura de las latas antes y después | Medir con regla para calcular el porcentaje de reducción de volumen |
+| Testing con usuarios | Encuesta de 5 o más usuarios (facilidad de uso y satisfacción, escala 1-5) |

@@ -1,93 +1,56 @@
 # Testing y Validación
 
 ## Objetivo
-Validar el funcionamiento del prototipo con usuarios reales y medir el impacto cuantitativo en la problemática ODS seleccionada.
+Validar el funcionamiento del prototipo, conocer sus límites reales y medir su aporte a la problemática del ODS 12 (producción y consumo responsables).
 
 ---
 
-## 📁 Carpetas
+## Carpetas
 
-#### `reportes/`
-Documentos con resultados del testing
-
-#### `evidencias/`
-Fotos y videos de sesiones con usuarios
-
-#### `datos/`
-Datos cuantitativos recolectados
+| Carpeta | Contenido |
+|---|---|
+| `reportes/` | Reporte de pruebas de carga del prototipo v3 (`pruebas_carga_v3.md`) |
+| `datos/` | Estimación de fuerza según la corriente (CSV y gráfico) |
+| `evidencias/` | Video del diagnóstico de la fuente de la v1; las fotos del prototipo final están en `hardware/fotos/` |
 
 ---
 
-## Metodología de Testing
+## Pruebas realizadas
 
-### Grupo Objetivo
-- **Perfil de usuarios:** [Descripción]
-- **Cantidad mínima:** 5 usuarios
-- **Ubicación:** [Contexto real de uso]
-
-### Protocolo de Testing
-1. **Briefing** (5 min)
-   - Explicar propósito del prototipo
-   - Contexto de uso
-
-2. **Sesión de Uso** (15-20 min)
-   - Usuario interactúa con prototipo
-   - Observación sin intervención
-   - Toma de notas
-
-3. **Entrevista Post-Testing** (10 min)
-   - Preguntas sobre experiencia
-   - Feedback cualitativo
-   - Sugerencias de mejora
-
-4. **Encuesta Cuantitativa** (5 min)
-   - Escala Likert (1-5)
-   - Métricas específicas
+| Prueba | Iteración | Resultado | Dónde está |
+|---|---|---|---|
+| Control manual del actuador con 2 relés | v1 | ✅ Sale y entra con los botones (tras reemplazar la fuente defectuosa) | `iteraciones/iteracion_1/README.md` |
+| Lógica del ciclo automático | v3 | ✅ 5 escenarios correctos; los dos relés nunca activos a la vez | `software/pruebas_pc/README.md` |
+| Carga en el prototipo real | v3 | ⚠️ Funciona con **máximo 5 latas paradas**; sobre 3 A (≈ 700 N) la estructura de madera cede; latas acostadas no permitidas | `reportes/pruebas_carga_v3.md` |
+| Refuerzo con escuadras de acero | v3 | ✅ Techo y piso reforzados | `hardware/fotos/v3_08_*.jpg`, `v3_09_*.jpg` |
+| Testing con usuarios (mín. 5) | — | Pendiente | — |
 
 ---
 
-## Métricas de Evaluación
+## Metodología para el testing con usuarios (pendiente)
 
-### Usabilidad
-- Facilidad de uso (1-5)
-- Claridad de funcionamiento (1-5)
-- Satisfacción general (1-5)
+### Grupo objetivo
+- **Perfil:** comunidad de la Universidad Adolfo Ibáñez (estudiantes y funcionarios que reciclan latas).
+- **Cantidad mínima:** 5 usuarios.
+- **Ubicación:** campus UAI, junto a un punto de reciclaje.
 
-### Impacto ODS
-- [Métrica específica 1 relacionada con ODS]
-- [Métrica específica 2 relacionada con ODS]
-- [Métrica específica 3 relacionada con ODS]
+### Protocolo
+1. **Explicación breve (5 min):** propósito del compactador y reglas de uso (máximo 5 latas paradas).
+2. **Uso sin ayuda (10 min):** el usuario carga latas, cierra la puerta y presiona el pulsador verde. Se observa sin intervenir.
+3. **Entrevista (5 min):** qué entendió, qué le costó, qué cambiaría.
+4. **Encuesta (2 min):** facilidad de uso, claridad y satisfacción, de 1 a 5.
 
-### Desempeño Técnico
-- Tiempo de respuesta del sistema
-- Tasa de errores
-- Confiabilidad
-
----
-
-## Análisis de Resultados
-
-### Cuantitativo
-- Promedios y desviaciones estándar
-- Gráficos de resultados
-- Comparación con baseline
-
-### Cualitativo
-- Temas recurrentes en feedback
-- Problemas identificados
-- Sugerencias de mejora
+### Métricas
+- **Usabilidad:** facilidad de uso (1-5), claridad de las instrucciones (1-5), satisfacción (1-5), errores de uso por sesión (por ejemplo, latas acostadas o más de 5).
+- **Impacto ODS 12:** reducción de altura de cada lata (%), latas que caben en el contenedor antes y después de compactar.
+- **Desempeño técnico:** duración del ciclo (s), corriente máxima por ciclo (A), ciclos sin falla.
 
 ---
 
-## Validación de Impacto ODS
+## Validación de impacto ODS
 
-**ODS Seleccionado:** [Número y nombre]
+**ODS seleccionado:** 12 - Producción y consumo responsables.
 
-**Meta específica del proyecto:** [Describir]
+**Meta del proyecto:** aprovechar mejor la capacidad de los contenedores de reciclaje compactando las latas al momento de depositarlas.
 
-**Indicadores de impacto:**
-1. [Indicador 1] - Baseline: [X], Meta: [Y], Alcanzado: [Z]
-2. [Indicador 2] - Baseline: [X], Meta: [Y], Alcanzado: [Z]
-
-**Proyección de impacto a escala:**
-[Si el prototipo se despliega en toda la ciudad/comunidad, cuál sería el impacto estimado]
+**Indicador principal:** latas almacenadas por volumen de contenedor. Según el planteamiento del proyecto, una lata compactada hasta cerca del 30 % de su altura permite guardar unas tres veces más latas en el mismo espacio. Este valor debe confirmarse midiendo las latas compactadas por el prototipo v3, considerando que el límite de 700 N puede dejarlas menos compactadas que lo planteado.
