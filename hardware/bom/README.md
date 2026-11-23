@@ -1,5 +1,7 @@
 # Bill of Materials (BOM) - v3.0
 
+**Versión para compartir:** [`lista_materiales_v3.pdf`](lista_materiales_v3.pdf) (solo los materiales usados en el prototipo).
+
 Los precios y proveedores quedan para completar por el equipo (`[completar]`).
 
 ## 1. Electrónica
