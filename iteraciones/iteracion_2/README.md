@@ -1,23 +1,42 @@
-# Iteración 2 - Primera Mejora Significativa
+# Iteración 2 - Control automático simulado y paso a la estructura de madera
 
 ## Información General
 
-**Fecha:** [XX/XX/2025]  
+**Fecha:** octubre - noviembre 2026 [completar fecha exacta]  
 **Versión:** v2.0  
-**Estado:** Prototipo funcional mejorado  
+**Estado:** Prototipo de control en simulación (Wokwi) + diseño de la estructura para fabricar  
 **Avance asociado:** Avance #2
 
 ---
 
 ## Descripción
 
-Segunda versión del prototipo, incorporando feedback de la iteración 1 y del Avance #1. Incluye mejoras significativas en funcionalidad y primeros pasos en diseño de encapsulado.
+La v1 demostró que el Arduino puede mover el actuador en ambos sentidos con dos relés, pero solo mientras se mantenía presionado un botón y sin ninguna medición. En esta iteración se diseñó y simuló el **ciclo automático** antes de llevarlo al prototipo real, y se pasó del modelo en acero a una estructura fabricable en madera.
 
 **Objetivos de esta iteración:**
-- Corregir problemas identificados en v1
-- Agregar funcionalidades adicionales
-- Iniciar diseño 3D del encapsulado
-- Realizar primeras pruebas con usuarios
+- Pasar del control manual a un ciclo automático de un solo toque.
+- Agregar un botón de paro de emergencia.
+- Incorporar una medición de la corriente del motor para saber cuánta fuerza hace.
+- Probar la lógica en simulación sin arriesgar el actuador ni la fuente.
+
+---
+
+## Simulación en Wokwi
+
+![Simulación en Wokwi](../../hardware/esquemas/simulacion_wokwi_v3.png)
+
+| N° | Componente simulado | Representa en la máquina real |
+|---|---|---|
+| 1 | Arduino UNO | Controlador del compactador |
+| 2 | Pulsador verde (pin 6) | Botón de MARCHA: inicia el ciclo |
+| 3 | Pulsador rojo (pin 3) | Botón de PARADA / paro de emergencia |
+| 4 | Sensor ultrasónico HC-SR04 (pines 7 y 8) | Sensor de presencia de la lata en la cámara |
+| 5 | Potenciómetro (A0) | Sensor de corriente del motor |
+| 6 | LED amarillo + resistencia (pin 9) | Luz piloto de funcionamiento |
+| 7 | Módulo relé 1 (pin 4) | Contactor de AVANCE |
+| 8 | Módulo relé 2 (pin 5) | Contactor de RETORNO |
+| 9 | LED verde + resistencia | Motor avanzando (aplasta la lata) |
+| 10 | LED azul | Motor retrocediendo |
 
 ---
 
@@ -25,129 +44,55 @@ Segunda versión del prototipo, incorporando feedback de la iteración 1 y del A
 
 ### Hardware
 **Agregado:**
-- [Componente nuevo 1]
-- [Componente nuevo 2]
+- Medición de corriente (simulada con un potenciómetro) para estimar la fuerza.
+- Botón de paro de emergencia.
+- Sensor de presencia y luz piloto (solo en la simulación).
 
 **Modificado:**
-- [Cambio 1] - Razón: [Justificación]
-- [Cambio 2] - Razón: [Justificación]
+- Los botones dejan de ser "mantener presionado para mover": el verde inicia un ciclo completo.
 
-**Removido:**
-- [Componente removido] - Razón: [Justificación]
+**Sin cambios:**
+- Pines de los botones (6 y 3) y de los relés (4 y 5), heredados de la v1. El pin 2 sigue sin usarse.
 
 ### Software
 **Nuevas funcionalidades:**
-- [Feature 1]
-- [Feature 2]
+- Ciclo automático: avance → detención → retorno.
+- Detención por corriente (en la simulación, al girar el potenciómetro).
+- Paro de emergencia con prioridad sobre todo lo demás.
 
-**Optimizaciones:**
-- [Optimización 1]
-- [Optimización 2]
-
-**Bugs corregidos:**
-- [Bug 1 de v1]
-- [Bug 2 de v1]
-
-### Diseño Mecánico
-- Primer diseño de encapsulado en Fusion 360
-- Prototipo impreso en 3D
-- Integración de componentes en carcasa
+### Diseño mecánico
+- El modelo de Fusion 360 de la v1 tenía acero asignado a todas las piezas (450 × 450 × 1000 mm, 135 kg), aunque el equipo ya había definido construir en madera (lista de materiales de la v1). El diseño se ajustó a un **mueble de madera de 380 × 370 × 850 mm**, con la placa guiada por 2 tubos y el actuador colgado de una viga (planos definitivos en `diseno_3d/planos/`).
 
 ---
 
-## Fotos del Prototipo v2
+## Problemas Pendientes (llevados a la v3)
 
-Incluir en esta carpeta:
-- `v2_prototipo_completo.jpg`
-- `v2_circuito_integrado.jpg`
-- `v2_encapsulado_inicial.jpg`
-- `v2_testing_usuario.jpg`
-
----
-
-## Resultados de Testing
-
-### Funcionalidad Lograda
-✅ [Función 1]  
-✅ [Función 2]  
-✅ [Función 3]  
-⚠️ [Función 4 - parcial]
-
-### Feedback del Avance #2
-
-**Comentarios del profesor/ayudante:**
-1. [Comentario 1]
-   - Acción: [Plan de mejora para v3]
-
-2. [Comentario 2]
-   - Acción: [Plan de mejora para v3]
-
-### Testing con Usuarios (2-3 personas)
-
-**Resultados cuantitativos:**
-- Facilidad de uso promedio: [X/5]
-- Satisfacción promedio: [X/5]
-
-**Feedback cualitativo:**
-- Positivo: [Comentarios]
-- A mejorar: [Comentarios]
-
----
-
-## Problemas Pendientes
-
-1. **Problema 1:**
-   - Descripción: [Detalles]
-   - Prioridad: Alta/Media/Baja
-   - Plan para v3: [Solución propuesta]
-
-2. **Problema 2:**
-   - Descripción: [Detalles]
-   - Prioridad: Alta/Media/Baja
-   - Plan para v3: [Solución propuesta]
+1. **Comprobar la simulación en el prototipo real.**
+   - Wokwi no simula el consumo del motor ni la resistencia de las latas; el valor real del límite de corriente había que encontrarlo en pruebas.
+   - Prioridad: Alta.
+2. **Resistencia de la estructura de madera.**
+   - No se sabía cuánta fuerza soportaría el mueble.
+   - Prioridad: Alta.
+3. **Sensor de presencia.**
+   - Evaluar si es necesario en el uso real o si basta con que el usuario cierre la puerta y presione el verde.
+   - Prioridad: Media.
 
 ---
 
 ## Comparación v1 vs v2
 
-| Aspecto | v1 | v2 | Mejora |
-|---------|----|----|--------|
-| Sensores funcionales | 2/3 | 3/3 | ✅ |
-| Tiempo de respuesta | 500ms | 200ms | ↓60% |
-| Consumo energético | 250mA | 180mA | ↓28% |
-| Encapsulado | ❌ | Prototipo | ✅ |
-| Usuarios testeados | 0 | 2 | ✅ |
+| Aspecto | v1 | v2 |
+|---|---|---|
+| Control | Manual (mantener presionado) | Automático de un toque (simulado) |
+| Paro de emergencia | No | Sí |
+| Medición de fuerza | No | Corriente (simulada con potenciómetro) |
+| Sensores | Ninguno | HC-SR04 y potenciómetro (simulados) |
+| Estructura | Modelo en acero (Fusion 360) | Diseño en madera para fabricar |
+| Usuarios testeados | 0 | 0 |
 
 ---
 
-## Plan para Iteración 3 (Versión Final)
+## Archivos relacionados
 
-### Mejoras Críticas
-
-**Hardware:**
-- [ ] [Mejora crítica 1]
-- [ ] [Mejora crítica 2]
-
-**Software:**
-- [ ] [Optimización 1]
-- [ ] [Feature faltante]
-
-**Diseño:**
-- [ ] Refinar encapsulado
-- [ ] Mejorar accesibilidad
-- [ ] Finalizar sistema de montaje
-
-**Testing:**
-- [ ] Testear con 5+ usuarios
-- [ ] Validar métricas ODS
-- [ ] Instalación en contexto real
-
----
-
-## Archivos en esta Carpeta
-
-- `v2_codigo.ino` - Código de esta versión
-- `v2_esquema.png` - Esquema del circuito actualizado
-- `v2_modelo3d.f3d` - Primer diseño en Fusion 360
-- `v2_fotos/` - Fotografías del prototipo
-- `v2_feedback.pdf` - Compilación de comentarios recibidos
+- Captura de la simulación: `hardware/esquemas/simulacion_wokwi_v3.png`
+- **Pendiente:** exportar desde Wokwi el `diagram.json`, el código de la simulación y el enlace del proyecto, y guardarlos en `hardware/esquemas/`.

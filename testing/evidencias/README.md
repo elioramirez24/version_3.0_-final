@@ -1,109 +1,35 @@
 # Evidencias de Testing
 
-## Contenido Requerido
+## Evidencias registradas
 
-### Fotografías
+| Archivo | Iteración | Contenido |
+|---|---|---|
+| `videos/prueba_transformador_original_v1.mov` | 1 | Prueba del transformador original de 12 V con multímetro y el actuador conectado (10 s). Registra el diagnóstico de la fuente defectuosa |
+| `../../iteraciones/iteracion_3/v3_fotos_proceso/` | 3 | Pruebas del circuito v3 sobre el mueble, antes de integrarlo, y tapa antes del refuerzo |
+| `../../hardware/fotos/` | 3 | Prototipo final: mueble, circuito interno, fuente, sensor, relés y tapa reforzada con escuadras de acero |
+| `../../hardware/esquemas/simulacion_wokwi_v3.png` | 2-3 | Simulación del circuito en Wokwi |
 
-#### Sesiones con Usuarios
-- `sesion_usuario_01.jpg`
-- `sesion_usuario_02.jpg`
-- `sesion_usuario_03.jpg`
-- `sesion_usuario_04.jpg`
-- `sesion_usuario_05.jpg`
+## Pendiente
 
-**Requisitos:**
-- Mínimo 1 foto por usuario
-- Mostrar interacción con prototipo
-- Rostros difuminados si no hay consentimiento
-- Contexto de uso visible
-
-#### Instalación en Terreno
-- `instalacion_contexto_01.jpg`
-- `instalacion_contexto_02.jpg`
-
-**Requisitos:**
-- Prototipo instalado en ubicación objetivo
-- Referencia de escala (personas, objetos conocidos)
-- Condiciones reales de operación
+- Video del ciclo completo en el prototipo v3 (con 5 latas paradas).
+- Fotos de las latas antes y después de compactar, con una regla como referencia.
+- Sesiones con usuarios (mínimo 5), con consentimiento.
 
 ---
 
-### Videos
-
-#### Video de Demostración con Usuario
-`demo_usuario_real.mp4`
-
-**Contenido:**
-- Duración: 2-5 minutos
-- Usuario interactuando con prototipo
-- Voz en off explicando proceso (opcional)
-- Calidad mínima: 720p
-
-#### Video de Funcionamiento en Contexto
-`funcionamiento_contexto.mp4`
-
-**Contenido:**
-- Duración: 1-3 minutos
-- Prototipo operando en ubicación real
-- Condiciones ambientales visibles
-- Datos/indicadores en pantalla (si aplica)
-
----
-
-## Privacidad y Consentimiento
-
-### Antes de Fotografiar/Grabar
-- [ ] Obtener consentimiento informado verbal o escrito
-- [ ] Explicar uso de imágenes (proyecto académico)
-- [ ] Ofrecer opción de anonimato
-
-### Anonimización
-Si no hay consentimiento para mostrar rostros:
-- Difuminar rostros en fotos
-- Tomas desde ángulos que no muestren cara
-- Usar iniciales en lugar de nombres completos
-
----
-
-## Organización de Archivos
+## Nomenclatura de archivos
 
 ```
-evidencias/
-├── fotos/
-│   ├── sesiones_usuarios/
-│   │   ├── sesion_U01_[fecha].jpg
-│   │   ├── sesion_U02_[fecha].jpg
-│   │   └── ...
-│   └── instalacion_terreno/
-│       ├── instalacion_exterior_01.jpg
-│       └── instalacion_detalle_02.jpg
-├── videos/
-│   ├── demo_usuario_U01.mp4
-│   └── funcionamiento_24hrs.mp4
-└── consentimientos/
-    ├── consentimiento_U01.pdf
-    └── ...
-```
-
----
-
-## Nomenclatura de Archivos
-
-**Fotos:**
-```
-[tipo]_[identificador]_[fecha].jpg
+[tipo]_[descripcion]_[fecha].jpg / .mp4
 
 Ejemplos:
-sesion_U01_20241120.jpg
-instalacion_exterior_20241121.jpg
-detalle_sensor_20241120.jpg
+ciclo_5_latas_20261125.mp4
+latas_antes_despues_20261125.jpg
+sesion_U01_20261126.jpg
 ```
 
-**Videos:**
-```
-[tipo]_[descripcion]_[fecha].mp4
+## Privacidad y consentimiento
 
-Ejemplos:
-demo_usuario_U01_20241120.mp4
-funcionamiento_24hrs_20241121.mp4
-```
+- Obtener el consentimiento de cada usuario antes de fotografiarlo o grabarlo.
+- Si no hay consentimiento para mostrar el rostro, difuminarlo o grabar sin mostrar la cara.
+- Revisar también los reflejos en el acrílico del mueble antes de publicar una foto.

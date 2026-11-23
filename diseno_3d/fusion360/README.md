@@ -1,51 +1,71 @@
-# Archivos Fusion 360
+# Archivos Fusion 360 (modelo v1)
 
-## Archivos Requeridos
+> **Nota v3.0:** este modelo corresponde a la **iteración 1** (estructura en acero de 450 × 450 × 1000 mm). El prototipo definitivo se construyó en madera con otras medidas (380 × 370 × 850 mm); su diseño está en `diseno_3d/planos/planos_v3.pdf`. Se conserva como registro del proceso iterativo.
+>
+> El archivo está en `diseno_3d/compactador_v1.f3z`.
 
-### `modelo_completo_v3.f3d`
-Archivo principal con **historial de cambios completo**
+## Archivos
 
-**DEBE INCLUIR:**
--  Todos los componentes modelados
--  Ensamble completo funcional
--  Historial de diseño (timeline)
--  Materiales asignados
--  Constraints y relaciones
-
----
-
-## Estructura del Modelo
+| Archivo | Descripción |
+|---|---|
+| `compactador_v1.f3z` | Ensamble "taller" exportado el 17-10-2026 (modelo iniciado el 21-09-2026) |
 
 ### Componentes (Components)
 ```
-Ensamble_Principal
-├── Encapsulado_Inferior
-├── Encapsulado_Superior
-├── ESP32_DevKit
-├── Sensor_DHT22
-├── LED_Indicador
-├── Soporte_Bateria
-├── Bracket_Montaje
-└── Tornilleria
+taller (Ensamble, Configuración 1)
+├── Chasis_Base
+├── Contenedor_Basura
+├── Marco_Superior
+├── Tapa_Superior
+├── Puerta_Frontal
+├── Placa_Compresora
+├── Guias_Lineales
+├── Soporte_Actuador
+└── Actuador_Lineal
 ```
 
-### Uniones (Joints)
-Documentar las juntas principales y sus restricciones
+Material asignado a las piezas: **Acero** (7,85 g/cm³).
 
-### Parámetros
-Listar parámetros principales utilizados:
-- `ancho_total = 120mm`
-- `alto_total = 80mm`
-- `grosor_pared = 2mm`
+### Propiedades físicas por pieza (v1, medidas desde Fusion 360)
 
----
+| Componente | Pieza | Medidas (X × Y × Z) | Volumen | Masa |
+| --- | --- | --- | --- | --- |
+| Chasis_Base | Chasis_Base | 45,0 × 45,0 × 100,0 cm | 5.955,41 cm³ | 46,75 kg |
+| Contenedor_Basura | Contenedor_Basura | 39,0 × 39,0 × 55,0 cm | 1.991,05 cm³ | 15,63 kg |
+| Marco_Superior | Poste_1 | 2,0 × 4,0 × 44,7 cm | 337,85 cm³ | 2,65 kg |
+| Marco_Superior | Poste_2 | 2,0 × 4,0 × 44,7 cm | 357,60 cm³ | 2,81 kg |
+| Marco_Superior | Poste_3 | 2,0 × 4,0 × 44,7 cm | 357,60 cm³ | 2,81 kg |
+| Marco_Superior | Poste_4 | 2,0 × 4,0 × 44,7 cm | 357,60 cm³ | 2,81 kg |
+| Actuador_Lineal | Actuador_Cuerpo | Ø4,0 × 53,5 cm (cilíndrico) | 672,30 cm³ | 5,28 kg |
+| Actuador_Lineal | Actuador_Motor | 8,0 × 8,0 × 12,0 cm | 603,19 cm³ | 4,74 kg |
+| Guias_Lineales | Eje_Guia_1 | Ø1,6 × 59,7 cm (cilíndrico) | 120,03 cm³ | 0,94 kg |
+| Guias_Lineales | Eje_Guia_2 | Ø1,6 × 59,7 cm (cilíndrico) | 120,03 cm³ | 0,94 kg |
+| Placa_Compresora | Placa_Compresora | 38,0 × 38,0 × 1,5 cm | 2.166,00 cm³ | 17,00 kg |
+| Tapa_Superior | Tapa_Superior | 45,0 × 45,0 × 1,0 cm (agujero Ø1,5 cm) | 2.023,23 cm³ | 15,88 kg |
+| Tapa_Superior | Bisagra_Tapa | 45,0 × 1,0 × 1,0 cm | 35,34 cm³ | 0,28 kg |
+| Puerta_Frontal | Puerta_Frontal | 39,0 × 0,3 × 52,0 cm | 608,40 cm³ | 4,78 kg |
+| Puerta_Frontal | Bisagra_Puerta | 1,0 × 1,0 × 39,0 cm | 30,63 cm³ | 0,24 kg |
+| Puerta_Frontal | Pestillo_Puerta | 4,0 × 1,0 × 1,5 cm | 6,00 cm³ | 0,05 kg |
+| Soporte_Actuador | Soporte_Actuador | 39,0 × 39,0 × 1,0 cm | 1.503,94 cm³ | 11,81 kg |
+| **Total** | **17 piezas** | | **17.246,20 cm³** | **135,40 kg** |
 
-## Instrucciones de Apertura
+### Observaciones de revisión
+1. **Materiales del modelo distintos a los reales.** El modelo usa acero en todo, pero el equipo construirá con **MDF (Trupán)**, listones de madera y una lámina de metal para la placa (ver `hardware/bom/README.md`). Hay que cambiar los materiales en Fusion 360 para que el peso sea correcto. ℹ️ Con MDF y madera, la estructura sin placa ni actuador pasaría de unos 108 kg a cerca de **9,8 kg**.
+2. **Placa compresora maciza de 15 mm.** Es la pieza más pesada después del chasis. ℹ️ El actuador debe levantarla en cada retroceso; una placa más delgada o con nervios de refuerzo reduciría el peso sin perder rigidez.
+3. **Actuador modelado como sólido de acero (10,0 kg).** El actuador real es hueco y pesa bastante menos. Conviene asignarle su masa real (ver ficha del fabricante) para que el peso total sea correcto.
+4. **Largo del actuador.** El modelo usa un cuerpo de 53,5 cm. ℹ️ El código del actuador real (…-405-300-…) sugiere un largo retraído cercano a 405 mm y una carrera de 300 mm; conviene medir el actuador físico y ajustar el modelo.
+5. **Poste_1 con menor volumen** (337,85 cm³) que los otros tres (357,60 cm³), aunque tienen las mismas medidas. Revisar si tiene un corte o agujero que los demás no tienen, o si es un error de modelado.
+6. **Agujero de Ø1,5 cm en la tapa.** Indicar su función. Si es para el paso del vástago del actuador, verificar que el diámetro del vástago real quepa.
+7. **Holgura placa-contenedor:** 0,5 cm por lado (placa de 38 cm en contenedor de 39 cm). Es adecuada para que no roce, pero conviene confirmar que las latas no queden atrapadas en ese espacio.
 
-1. Abrir Fusion 360
-2. File > Open > Seleccionar archivo `.f3d`
-3. Verificar que todas las referencias están cargadas
-4. Revisar timeline para ver historial
+### Componentes del circuito
+- [ ] Arduino UNO (68,6 × 53,4 mm)
+- [ ] 2 módulos de relé
+- [ ] Botones SALIR y ENTRAR en su ubicación exterior
+- [ ] Transformador / fuente de 12 V
+- [ ] Caja de protección de la electrónica
+- [ ] Recorrido aproximado del cableado
+- [ ] Tornillería y soportes de montaje
 
 ---
 
@@ -53,8 +73,4 @@ Listar parámetros principales utilizados:
 
 | Versión | Fecha | Cambios Principales |
 |---------|-------|---------------------|
-| v3.0 | [Fecha] | Versión final para Avance #3 |
-| v2.1 | [Fecha] | Ajustes post Avance #2 |
-| v1.0 | [Fecha] | Primera versión funcional |
-
----
+| v1.0 | 17-10-2026 | Estructura mecánica con actuador lineal y placa compresora |

@@ -1,0 +1,12 @@
+corriente_A,fuerza_estimada_N,masa_equivalente_kg,observacion
+1.0,0,0,actuador en vacío: no empuja (corriente para vencer roces del motor y tornillo)
+1.5,175,18,permitido
+2.0,350,36,permitido
+2.5,525,54,permitido
+2.9,665,68,UMBRAL DEL PROGRAMA (2900 mA): la placa retrocede de inmediato
+3.0,700,71,DAÑO: desde aquí la estructura de madera se daña (estimación del equipo ≈ 700 N)
+3.5,875,89,no permitido: la estructura de madera se rompe
+4.0,1050,107,no permitido: la estructura de madera se rompe
+4.5,1225,125,no permitido: la estructura de madera se rompe
+5.0,1400,143,no permitido: la estructura de madera se rompe
+5.3,1505,153,fuerza máxima del actuador según fabricante (1500 N)

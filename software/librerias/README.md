@@ -1,47 +1,12 @@
 # Librerías
 
-## Librerías Estándar (Arduino IDE)
+El proyecto **no usa librerías externas**. Todo lo que necesita viene incluido en Arduino IDE:
 
-Instalar desde el Library Manager de Arduino IDE:
+| Función usada | Para qué | Fuente |
+|---|---|---|
+| `digitalRead` / `digitalWrite` / `pinMode` | Pulsadores y relés | Núcleo Arduino AVR (incluido) |
+| `analogRead` | Sensor de corriente en A0 | Núcleo Arduino AVR (incluido) |
+| `millis` | Tiempos del ciclo sin detener el programa | Núcleo Arduino AVR (incluido) |
+| `Serial` | Mensajes en el Monitor Serie | Núcleo Arduino AVR (incluido) |
 
-1. **[Nombre Librería 1]** - v[X.X.X]
-   - Propósito: [Descripción]
-   - Instalación: `Sketch > Include Library > Manage Libraries > Buscar "[nombre]"`
-
-2. **[Nombre Librería 2]** - v[X.X.X]
-   - Propósito: [Descripción]
-   - Instalación: [Instrucciones]
-
----
-
-## Librerías Personalizadas/Modificadas
-
-Si hay librerías modificadas o no disponibles en Arduino IDE, incluir en esta carpeta:
-
-### Estructura
-```
-librerias/
-├── MiLibreria/
-│   ├── MiLibreria.h
-│   ├── MiLibreria.cpp
-│   ├── keywords.txt
-│   └── README.md
-```
-
-### Instalación Manual
-```bash
-# Copiar carpeta a Arduino libraries
-cp -r MiLibreria ~/Documents/Arduino/libraries/
-```
-
----
-
-## Dependencias Completas
-
-Listar TODAS las librerías necesarias con versiones exactas:
-
-| Librería | Versión | Fuente | Obligatoria |
-|----------|---------|--------|-------------|
-| WiFi | Built-in | ESP32 Core | ✅ |
-| [Lib 1] | x.x.x | Arduino Library Manager | ✅ |
-| [Lib 2] | x.x.x | GitHub | ❌ |
+No hay que instalar nada desde el Library Manager.
