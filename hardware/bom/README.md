@@ -20,7 +20,7 @@ Los precios y proveedores quedan para completar por el equipo (`[completar]`).
 | 1 | Cargador USB 5 V + cable USB A-B | Alimentación del Arduino | — | [completar] | [CLP] | [CLP] |
 | — | Conectores y cinta aislante | Uniones de 12 V y aislación de borneras | — | [completar] | [CLP] | [CLP] |
 
-## 2. Estructura (según `diseno_3d/planos/planos_v3.pdf`, hoja 3)
+## 2. Estructura (piezas usadas, según `diseno_3d/planos/planos_v3.pdf`, hoja 3)
 
 | N° | Pieza | Material | Cant. | Medidas (mm) |
 |---|---|---|---|---|
@@ -36,11 +36,10 @@ Los precios y proveedores quedan para completar por el equipo (`[completar]`).
 | — | Pestillos magnéticos | — | 2 | — |
 | 9 | Pulsador paro de emergencia (rojo) | — | 1 | Ø30, en la tapa |
 | 10 | Pulsador compactar (verde) | — | 1 | Ø30, en la tapa |
-| — | Fines de carrera | — | 2 | En el recorrido de la placa |
 | — | Bisagras, pomo y tornillos | Bronce / madera | var. | — |
 | — | Perno pivote del actuador | Acero | 1 | Ø8 |
 
-**Sobre los fines de carrera:** el programa v3 detecta los extremos del recorrido por la caída de corriente que produce el corte de los fines de carrera internos del actuador, por lo que no usa entradas adicionales en el Arduino.
+**No se usaron:** los 2 fines de carrera que figuran en los planos. El programa v3 detecta los extremos del recorrido por la caída de corriente que produce el corte de los fines de carrera internos del actuador.
 
 ## 3. Refuerzos agregados en la iteración 3
 
